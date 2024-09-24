@@ -13,7 +13,7 @@ const Header = () => {
     <div className="header">
       <div>
         <Link id="header-logo" to="/">
-          LOGO
+          PSK
         </Link>
       </div>
 
@@ -21,19 +21,19 @@ const Header = () => {
         {user ? (
           <>
             <Link to="/" className="header--link">
-              Home
+              Domov
             </Link>
             <Link to="/profile" className="header--link">
               O hlasovaní
             </Link>
 
             <button onClick={logoutUser} className="btn">
-              Logout
+              Odhláste sa
             </button>
           </>
         ) : (
           <Link className="btn" to="/login">
-            Login
+            Prihláste sa
           </Link>
         )}
       </div>

@@ -31,29 +31,32 @@ const Register = () => {
           <div className="form-field-wrapper">
             <label>Meno:</label>
             <input
+              className="inputlogin"
               required
               type="text"
               name="name"
-              placeholder="Enter name..."
+              placeholder="Napíšte meno..."
             />
           </div>
 
           <div className="form-field-wrapper">
             <label>Email:</label>
             <input
+              className="inputlogin"
               required
               type="email"
               name="email"
-              placeholder="Vložte email..."
+              placeholder="Napíšte email..."
             />
           </div>
 
           <div className="form-field-wrapper">
             <label>Heslo:</label>
             <input
+              className="inputlogin"
               type="password"
               name="password1"
-              placeholder="Enter password..."
+              placeholder="Napíšte heslo..."
               autoComplete="password1"
             />
           </div>
@@ -61,9 +64,10 @@ const Register = () => {
           <div className="form-field-wrapper">
             <label>Potvrdiť heslo</label>
             <input
+              className="inputlogin"
               type="password"
               name="password2"
-              placeholder="Potvrdiť heslo..."
+              placeholder="Potvrďte heslo..."
               autoComplete="password2"
             />
           </div>
@@ -74,7 +78,7 @@ const Register = () => {
         </form>
 
         <p>
-          Máte už účet? <Link to="/login">Login</Link>
+          Máte už účet? <Link to="/login">Prihláste sa</Link>
         </p>
       </div>
     </div>

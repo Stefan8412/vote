@@ -35,17 +35,17 @@ const Login = () => {
               required
               type="email"
               name="email"
-              placeholder="Enter email..."
+              placeholder="vložte email ..."
             />
           </div>
 
           <div className="form-field-wrapper">
-            <label>Password:</label>
+            <label>Heslo:</label>
             <input
               className="inputlogin"
               type="password"
               name="password"
-              placeholder="Enter password..."
+              placeholder="napíšte heslo..."
               autoComplete="password"
             />
           </div>
@@ -56,7 +56,7 @@ const Login = () => {
         </form>
 
         <p>
-          Dont have an account? <Link to="/register">Register</Link>
+          Nemáte účet? <Link to="/register">Registrujte sa</Link>
         </p>
       </div>
     </div>
