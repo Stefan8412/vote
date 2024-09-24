@@ -11,6 +11,94 @@
 body {
   background: #eeeff3;
 }
+.container {
+  max-width: 90%;
+  margin: auto;
+  padding: 2em;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 1em;
+  border-bottom: 2px solid #000;
+}
+
+.header > .links--wrapper {
+  display: flex;
+  gap: 1em;
+  text-decoration-line: none;
+  align-items: center;
+}
+
+.header > .links--wrapper > .header--link {
+  text-decoration-line: none;
+  color: #000;
+  text-transform: uppercase;
+  align-items: center;
+}
+
+#header-logo {
+  font-size: 48px;
+  text-decoration-line: none;
+  color: #000;
+  font-weight: 900;
+  font-family: "Oleo Script", cursive;
+}
+
+.btn {
+  display: block;
+  cursor: pointer;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  padding: 0.5em 1em;
+  transition: 0.3s;
+  border: 1px solid #000;
+  text-decoration: none;
+  line-height: normal;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+/* FORM STYLING */
+
+.login-register-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inputlogin {
+  background: #fff;
+  border: 1px solid #000;
+  padding: 1rem;
+  width: 100%;
+  color: #000;
+  outline: none;
+}
+
+.form-field-wrapper {
+  margin: 1em 0;
+}
+
+@media (max-width: 800px) {
+  #header-logo {
+    display: none;
+  }
+
+  .header {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .container {
+    max-width: 95%;
+    margin: auto;
+    padding: 1em;
+  }
+}
 
 .votes:nth-child(1) {
   --main-color: var(--bg-blue);

@@ -1,52 +1,27 @@
-import { useState, useEffect } from "react";
-import { client, databases, DB_ID, COLLECTION_ID } from "./lib/appwrite";
-import Question from "./components/Questions";
+import Home from "./pages/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PrivateRoutes from "./utils/PrivateRoutes";
+import { AuthProvider } from "./utils/AuthContext";
+import Login from "./pages/Login";
+import Header from "./components/Header";
+import Profile from "./pages/Profile";
+import Register from "./pages/Register";
 
 function App() {
-  const [questions, setQuestions] = useState([]);
-
-  useEffect(() => {
-    getQuestionsFromDB();
-
-    const unsubscribe = client.subscribe(
-      `databases.${DB_ID}.collections.${COLLECTION_ID}.documents`,
-      (res) => {
-        console.log(res);
-
-        if (
-          res.events.includes("databases.*.collections.*.documents.*.update")
-        ) {
-          setQuestions((prevQuestions) => {
-            return prevQuestions.map((question) => {
-              if (question.$id !== res.payload.$id) {
-                return question;
-              }
-
-              return res.payload;
-            });
-          });
-
-          console.log("Updated Question");
-        }
-      }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  async function getQuestionsFromDB() {
-    const questions = await databases.listDocuments(DB_ID, COLLECTION_ID);
-    setQuestions(questions.documents);
-  }
-
   return (
-    <main className="container max-w-3xl mx-auto px-4 py-10">
-      {questions.map((question) => (
-        <Question key={question.$id} data={question} />
-      ))}
-    </main>
+    <Router>
+      <AuthProvider>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
