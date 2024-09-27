@@ -85,17 +85,10 @@ const VotingComponent = () => {
     setVotes((prevVotes) => ({ ...prevVotes, [currentUserId]: vote }));
   };
 
-  //   const handleSubmit = () => {
-
-  /*  const votingResult = isVotingSuccessful(votes);
-        setResult(votingResult ? "Voting success!" : "Voting not successful."); */
-  /*  } */
-  //   };
-
-  useEffect(() => {
+  const handleSubmit = () => {
     const votingResult = isVotingSuccessful(votes);
     setResult(votingResult ? "Voting success!" : "Voting not successful.");
-  }, [votes]);
+  };
 
   const getVoteData = (vote) => {
     const totalVotes = Object.values(votes).filter((v) => v === vote).length;
@@ -110,7 +103,7 @@ const VotingComponent = () => {
       <h1>Voting System</h1>
       <Vote text="For" {...getVoteData("for")} onVote={handleVote} />
       <Vote text="Against" {...getVoteData("against")} onVote={handleVote} />
-      {/* <button onClick={handleSubmit}>Submit Votes</button> */}
+      <button onClick={handleSubmit}>Submit Votes</button>
       {result && <p>{result}</p>}
     </div>
   );
