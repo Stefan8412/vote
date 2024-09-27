@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Client, Account } from "appwrite";
+import { Client } from "appwrite";
 import Vote from "../components/Vote";
+import { result1 } from "../lib/appwrite";
 
 // Initialize Appwrite client
 const client = new Client();
@@ -41,8 +42,9 @@ const VotingComponent = () => {
   const [result, setResult] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const account = new Account(client);
+    console.log(account, "account");
     account
       .get()
       .then((user) => {
@@ -52,6 +54,15 @@ const VotingComponent = () => {
         console.error("User not authenticated:", error);
         // Redirect to login or handle unauthenticated state
       });
+  }, []); */
+
+  useEffect(() => {
+    async function loadCurrentUser() {
+      const currentUserId = result1;
+      console.log(currentUserId, "user345");
+      setCurrentUserId(currentUserId);
+    }
+    loadCurrentUser();
   }, []);
 
   const isVotingSuccessful = (votes) => {
