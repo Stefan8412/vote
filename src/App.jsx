@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
+import KRS from "./pages/KRS";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={<Home />} />
+            <Route path="/krs" element={<KRS />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>

@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
-
+import { useState } from "react";
 const Header = () => {
   const navigate = useNavigate();
   const { user, logoutUser } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
   const logoutClick = () => {
     navigate("/login");
@@ -24,7 +25,10 @@ const Header = () => {
               Domov
             </Link>
             <Link to="/profile" className="header--link">
-              O hlasovaní
+              Hlasovanie
+            </Link>
+            <Link to="/krs" className="header--link">
+              KRS
             </Link>
 
             <button onClick={logoutUser} className="btn">
