@@ -11,7 +11,7 @@ export default function Question({ data }) {
 
     const formData = new FormData(e.target);
     const selectedVote = formData.get("vote");
-
+    //data.$id=document
     if (selectedVote === data.odpoved_1) {
       databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
         hlasy_1: data.hlasy_1 + 1,
@@ -55,7 +55,7 @@ export default function Question({ data }) {
           disabled={isSubmitted}
           className="cursor-pointer ml-auto my-6 rounded shadow bg-green-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
         >
-          Hlasuj
+          Vote
         </button>
       </form>
     </>

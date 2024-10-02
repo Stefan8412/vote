@@ -9,8 +9,7 @@ client
   .setProject("66f0f9a4000ca8ced3ad");
 
 export const databases = new Databases(client);
-export const account = new Account(client);
-export { ID } from "appwrite";
-const result1 = await account.get();
 
-export { client, DB_ID, COLLECTION_ID, result1 };
+export const account = new Account(client);
+
+export { client, DB_ID, COLLECTION_ID };

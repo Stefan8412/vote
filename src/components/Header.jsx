@@ -22,13 +22,13 @@ const Header = () => {
         {user ? (
           <>
             <Link to="/" className="header--link">
-              Domov
+              Vote
             </Link>
             <Link to="/profile" className="header--link">
-              Hlasovanie
+              Greet
             </Link>
             <Link to="/krs" className="header--link">
-              KRS
+              Vote-Population
             </Link>
 
             <button onClick={logoutUser} className="btn">

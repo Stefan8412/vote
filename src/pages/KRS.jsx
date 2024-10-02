@@ -1,50 +1,28 @@
 import { useState, useEffect } from "react";
-import { Client } from "appwrite";
-import Vote from "../components/Vote";
-import { result1 } from "../lib/appwrite";
+import Question1 from "../components/Question1";
 
-// Initialize Appwrite client
-const client = new Client();
-client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-  .setProject("66f0f9a4000ca8ced3ad"); // Your project ID
-
-const voters = {
-  "66f30fab0027056be9ff": { population: 53203 },
-  /*   Lucia: { population: 53203 },
-  Lubica: { population: 19483 },
-  Jan: { population: 31132 },
-  Vladimir: { population: 79305 },
-  Vladislav: { population: 75561 },
-  Viliam: { population: 58560 },
-  Michal: { population: 15319 },
-  Jan: { population: 10646 }, */
-  "66f5c34b002a60d77af9": { population: 126400 },
-  /*   Frantisek: { population: 92759 },
-  Michal: { population: 61913 },
-  Jozef: { population: 33964 },
-  Martina: { population: 82025 },
-  Jan: { population: 179 },
-  Julia: { population: 3743 },
-  PavolP: { population: 13907 },
-  Anton: { population: 48640 },
-  Jozef: { population: 2399 }, */
-  // Add more user IDs and their populations
-};
-
-const totalPopulation = Object.values(voters).reduce(
-  (acc, voter) => acc + voter.population,
-  0
-);
+import { client, databases, DB_ID, COLLECTION_ID } from "../lib/appwrite";
 
 const VotingComponent = () => {
   const [votes, setVotes] = useState({});
   const [result, setResult] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [items, setItems] = useState([]);
+  const [selected, setSelected] = useState("");
+  /* 
+  useEffect(() => {
+    async function getCurrentUser() {
+      const userId = await getCurrentUser();
+      console.log(userId);
+      setCurrentUserId(currentUserId);
+      console.log(currentUserId, "currentUserId");
+    }
+    getCurrentUser();
+  }, []); */
 
   /* useEffect(() => {
-    const account = new Account(client);
-    console.log(account, "account");
+  
+ 
     account
       .get()
       .then((user) => {
@@ -55,15 +33,6 @@ const VotingComponent = () => {
         // Redirect to login or handle unauthenticated state
       });
   }, []); */
-
-  useEffect(() => {
-    async function loadCurrentUser() {
-      const currentUserId = result1;
-      console.log(currentUserId, "user345");
-      setCurrentUserId(currentUserId);
-    }
-    loadCurrentUser();
-  }, []);
 
   const isVotingSuccessful = (votes) => {
     let totalWeight = 0;
@@ -109,14 +78,50 @@ const VotingComponent = () => {
     return { percentage, totalVotes };
   };
 
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    getQuestionsFromDB();
+
+    const unsubscribe = client.subscribe(
+      `databases.${DB_ID}.collections.${COLLECTION_ID}.documents`,
+      (res) => {
+        console.log(res, "res");
+
+        if (
+          res.events.includes("databases.*.collections.*.documents.*.update")
+        ) {
+          setQuestions((prevQuestions) => {
+            return prevQuestions.map((question) => {
+              if (question.$id !== res.payload.$id) {
+                return question;
+              }
+
+              return res.payload;
+            });
+          });
+
+          console.log("Updated Question");
+        }
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  async function getQuestionsFromDB() {
+    const questions = await databases.listDocuments(DB_ID, COLLECTION_ID);
+    setQuestions(questions.documents);
+  }
+
   return (
-    <div>
-      <h1>Voting System</h1>
-      <Vote text="For" {...getVoteData("for")} onVote={handleVote} />
-      <Vote text="Against" {...getVoteData("against")} onVote={handleVote} />
-      <button onClick={handleSubmit}>Submit Votes</button>
-      {result && <p>{result}</p>}
-    </div>
+    <main className="container max-w-3xl mx-auto px-4 py-10">
+      {questions.map((question) => (
+        <Question1 key={question.$id} data={question} />
+      ))}
+    </main>
   );
 };
 

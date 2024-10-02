@@ -11,7 +11,7 @@ const Home = () => {
     const unsubscribe = client.subscribe(
       `databases.${DB_ID}.collections.${COLLECTION_ID}.documents`,
       (res) => {
-        console.log(res);
+        console.log(res, "res");
 
         if (
           res.events.includes("databases.*.collections.*.documents.*.update")
@@ -38,6 +38,7 @@ const Home = () => {
 
   async function getQuestionsFromDB() {
     const questions = await databases.listDocuments(DB_ID, COLLECTION_ID);
+    console.log(questions, "blabla");
     setQuestions(questions.documents);
   }
 
