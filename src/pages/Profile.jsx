@@ -1,5 +1,3 @@
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 const Profile = () => {
   const obj = `
    {
@@ -75,16 +73,7 @@ console.log(result ? "Approved!" : "Not approved.")}
         1:Regular based on percentage and 2. based on vote weight (according
         population), in code snippet there is Javascript solution
       </p>
-      <div>
-        <SyntaxHighlighter
-          language="jss"
-          style={atomOneDark}
-          customStyle={{ padding: "25px", fontSize: "17px" }}
-          wrapLines={true}
-        >
-          {obj}
-        </SyntaxHighlighter>
-      </div>
+      <div></div>
     </div>
   );
 };
