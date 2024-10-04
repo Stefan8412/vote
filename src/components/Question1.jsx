@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { databases, DB_ID, COLLECTION_ID, account } from "../lib/appwrite";
+import {
+  databases,
+  DB_ID,
+  COLLECTION_ID,
+  COLLECTION_ID1,
+  account,
+} from "../lib/appwrite";
 import Vote from "./Vote";
 
 export default function Question1({ data }) {
@@ -100,7 +106,7 @@ export default function Question1({ data }) {
       databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
         hlasy_1: data.hlasy_1 + 1,
       });
-      databases.createDocument("votes", "unique", {
+      databases.createDocument(DB_ID, COLLECTION_ID1, data.$id, {
         itemId: selected,
         userId: user["$id"],
       });
@@ -109,7 +115,7 @@ export default function Question1({ data }) {
       databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
         hlasy_2: data.hlasy_2 + 1,
       });
-      databases.createDocument("votes", "unique", {
+      databases.createDocument(DB_ID, COLLECTION_ID1, data.$id, {
         itemId: selected,
         userId: user["$id"],
       });

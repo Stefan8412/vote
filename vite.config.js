@@ -8,5 +8,10 @@ export default defineConfig({
       "top-level-await": true,
     },
   },
+  build: {
+    rollupOptions: {
+      external: ["react-syntax-highlighter"],
+    },
+  },
   plugins: [react()],
 });
