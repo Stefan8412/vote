@@ -8,7 +8,6 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Voteweight from "./pages/Vote-weight";
 
-export const dynamic = "force-dynamic";
 function App() {
   return (
     <Router>
