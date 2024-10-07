@@ -72,6 +72,11 @@ console.log(result ? "Approved!" : "Not approved.")}
       <p>
         1:Regular based on percentage and 2. based on vote weight (according
         population), in code snippet there is Javascript solution
+        <pre>
+          <code>
+            <p>{obj} </p>
+          </code>
+        </pre>
       </p>
       <div></div>
     </div>
