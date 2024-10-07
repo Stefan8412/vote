@@ -1,10 +1,31 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { databases, DB_ID, COLLECTION_ID } from "../lib/appwrite";
+import { useState, useEffect } from "react";
+import {
+  account,
+  databases,
+  DB_ID,
+  COLLECTION_ID,
+  COLLECTION_ID3,
+} from "../lib/appwrite";
 import Vote from "./Vote";
 
 export default function Question({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await account.get(); // Fetch the user data
+        setUserEmail(user.email); // Set the user ID
+        console.log(user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,10 +37,16 @@ export default function Question({ data }) {
       databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
         hlasy_1: data.hlasy_1 + 1,
       });
+      databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
+        itemIdyes: userEmail,
+      });
       // eslint-disable-next-line react/prop-types
     } else if (selectedVote === data.odpoved_2) {
       databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
         hlasy_2: data.hlasy_2 + 1,
+      });
+      databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
+        itemIdno: userEmail,
       });
     }
 

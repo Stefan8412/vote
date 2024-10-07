@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Question1 from "../components/Question1";
+import Questionweight from "../components/Question-weight";
 
-import { client, databases, DB_ID, COLLECTION_ID } from "../lib/appwrite";
+import { client, databases, DB_ID, COLLECTION_ID2 } from "../lib/appwrite";
 
-const VotingComponent = () => {
+const Voteweight = () => {
   const [votes, setVotes] = useState({});
   const [result, setResult] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -16,7 +16,7 @@ const VotingComponent = () => {
     getQuestionsFromDB();
 
     const unsubscribe = client.subscribe(
-      `databases.${DB_ID}.collections.${COLLECTION_ID}.documents`,
+      `databases.${DB_ID}.collections.${COLLECTION_ID2}.documents`,
       (res) => {
         console.log(res, "res");
 
@@ -44,17 +44,17 @@ const VotingComponent = () => {
   }, []);
 
   async function getQuestionsFromDB() {
-    const questions = await databases.listDocuments(DB_ID, COLLECTION_ID);
+    const questions = await databases.listDocuments(DB_ID, COLLECTION_ID2);
     setQuestions(questions.documents);
   }
 
   return (
     <main className="container max-w-3xl mx-auto px-4 py-10">
       {questions.map((question) => (
-        <Question1 key={question.$id} data={question} />
+        <Questionweight key={question.$id} data={question} />
       ))}
     </main>
   );
 };
 
-export default VotingComponent;
+export default Voteweight;

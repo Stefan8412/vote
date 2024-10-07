@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   databases,
   DB_ID,
-  COLLECTION_ID,
   COLLECTION_ID1,
+  COLLECTION_ID2,
   account,
 } from "../lib/appwrite";
 import Vote from "./Vote";
 
-export default function Question1({ data }) {
+export default function Questionweight({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selected, setIsSelected] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   const voters = {
     "66f30fab0027056be9ff": { population: 53203 },
@@ -67,17 +68,19 @@ export default function Question1({ data }) {
       votedCount >= agreementThreshold
     );
   };
-  const getCurrentUser = async () => {
-    try {
-      const user = await account.get();
-      return user.$id;
-    } catch (error) {
-      console.error("Failied to get current user", error);
-      return null;
-    }
-  };
-  const userId = getCurrentUser();
-  console.log(userId);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await account.get(); // Fetch the user data
+        setUserEmail(user.email); // Set the user ID
+        console.log(user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleVote = (vote) => {
     setVotes((prevVotes) => ({ ...prevVotes, [currentUserId]: vote }));
@@ -103,21 +106,20 @@ export default function Question1({ data }) {
     const selectedVote = formData.get("vote");
     //data.$id=document
     if (selectedVote === data.odpoved_1) {
-      databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+      databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
         hlasy_1: data.hlasy_1 + 1,
       });
-      databases.createDocument(DB_ID, COLLECTION_ID1, data.$id, {
-        itemId: selected,
-        userId: user["$id"],
+      databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
+        itemIdyes: userEmail,
       });
+
       // eslint-disable-next-line react/prop-types
     } else if (selectedVote === data.odpoved_2) {
-      databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+      databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
         hlasy_2: data.hlasy_2 + 1,
       });
-      databases.createDocument(DB_ID, COLLECTION_ID1, data.$id, {
-        itemId: selected,
-        userId: user["$id"],
+      databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
+        itemIdno: userEmail,
       });
     }
 
@@ -130,9 +132,7 @@ export default function Question1({ data }) {
 
   return (
     <>
-      <h2 className="text-3xl text-center font-bold">
-        {"Vote base on population"}
-      </h2>
+      <h2 className="text-3xl text-center font-bold">{data.text}</h2>
 
       <form
         onSubmit={handleSubmit}

@@ -27,7 +27,7 @@ const Header = () => {
             <Link to="/profile" className="header--link">
               Greet
             </Link>
-            <Link to="/krs" className="header--link">
+            <Link to="/voteweight" className="header--link">
               Vote-Population
             </Link>
 

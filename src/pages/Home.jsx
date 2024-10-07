@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { client, databases, DB_ID, COLLECTION_ID } from "../lib/appwrite";
-import Question from "../components/Questions";
+import Question from "../components/Question";
 
 const Home = () => {
   const [questions, setQuestions] = useState([]);
