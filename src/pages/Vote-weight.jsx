@@ -53,6 +53,7 @@ const Voteweight = () => {
       {questions.map((question) => (
         <Questionweight key={question.$id} data={question} />
       ))}
+      {result}
     </main>
   );
 };

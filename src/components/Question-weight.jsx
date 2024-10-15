@@ -11,8 +11,11 @@ import Vote from "./Vote";
 
 export default function Questionweight({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selected, setIsSelected] = useState("");
+  const [votes, setVotes] = useState({});
   const [userEmail, setUserEmail] = useState("");
+  const [user, setUser] = useState({});
+  const [userId, setUserId] = useState("");
+  const [result, setResult] = useState(null);
 
   const voters = {
     "66f30fab0027056be9ff": { population: 53203 },
@@ -37,23 +40,50 @@ export default function Questionweight({ data }) {
     // Add more user IDs and their populations
   };
 
-  const totalPopulation = Object.values(voters).reduce(
-    (acc, voter) => acc + voter.population,
-    0
-  );
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await account.get(); // Fetch the user data
+        setUserEmail(user.email); // Set the user email
+        const userId = user.$id;
+        setUserId(userId);
+        if (voters[userId]) {
+          setUser({ ...user, population: voters[userId].population });
+        } // Store matched user with population data
+        console.log(user, "object");
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, [voters]);
+
+  // Function to calculate total population from users who voted
+  function calculateTotalPopulationFromVotes(votes) {
+    return Object.keys(votes).reduce((total, voter) => {
+      if (votes[voter] && voters[voter]) {
+        return total + voters[voter].population;
+      }
+      return total;
+    }, 0);
+  }
 
   const isVotingSuccessful = (votes) => {
     let totalWeight = 0;
     let agreedWeight = 0;
     let votedCount = 0;
 
+    // Calculate total population only from those who voted
+    const totalPopulation = calculateTotalPopulationFromVotes(votes);
+    console.log(votes, "votes");
     for (const voter of Object.keys(voters)) {
       if (votes[voter]) {
         const weight = (voters[voter].population / totalPopulation) * 100;
         totalWeight += weight;
         votedCount++;
 
-        if (votes[voter] === "for") {
+        if (votes[voter] === "YES") {
           agreedWeight += weight;
         }
       }
@@ -61,6 +91,7 @@ export default function Questionweight({ data }) {
 
     const agreementThreshold = votedCount * 0.5;
     const successThreshold = totalWeight * 0.51;
+    console.log(agreementThreshold, "agreementThreshold");
 
     return (
       agreedWeight >= successThreshold &&
@@ -68,27 +99,17 @@ export default function Questionweight({ data }) {
       votedCount >= agreementThreshold
     );
   };
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await account.get(); // Fetch the user data
-        setUserEmail(user.email); // Set the user ID
-        console.log(user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
 
-    fetchUser();
-  }, []);
-
-  const handleVote = (vote) => {
-    setVotes((prevVotes) => ({ ...prevVotes, [currentUserId]: vote }));
+  /*   // Handle vote submission (example)
+  const handleVote = (voterName, vote) => {
+    setVotes({ ...votes, [voterName]: vote }); // Update the votes object
+    console.log(votes, "votes");
   };
-
-  /*  const handleSubmit = () => {
-    const votingResult = isVotingSuccessful(votes);
-    setResult(votingResult ? "Voting success!" : "Voting not successful.");
+  // Simulate calculating the result
+  useEffect(() => {
+    if (Object.keys(votes).length > 0) {
+      const votingResult = isVotingSuccessful(votes);
+      setResult(votingResult ? "Voting success!" : "Voting not successful.");
   }; */
 
   const getVoteData = (vote) => {
@@ -112,6 +133,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdyes: userEmail,
       });
+      setVotes({ ...votes, [user.$id]: data.odpoved_1 });
 
       // eslint-disable-next-line react/prop-types
     } else if (selectedVote === data.odpoved_2) {
@@ -121,45 +143,48 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdno: userEmail,
       });
+      setVotes({ ...votes, [user.$id]: data.odpoved_2 });
     }
 
     setIsSubmitted(true);
+
+    // Simulate calculating the result
+    const result = isVotingSuccessful(votes);
+    setResult(result);
   }
 
-  if (!data) return null;
-
-  const totalVotes = data.hlasy_1 + data.hlasy_2;
-
   return (
-    <>
-      <h2 className="text-3xl text-center font-bold">{data.text}</h2>
-
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 votes-container"
-      >
-        <Vote
-          text={data.odpoved_1}
-          percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
-          votes={data.hlasy_1}
-          onClik={() => setIsSelected(data.odpoved_1)}
-        />
-
-        <Vote
-          text={data.odpoved_2}
-          percentage={Math.floor((data.hlasy_2 / totalPopulation) * 100)}
-          votes={data.hlasy_2}
-          onClik={() => setIsSelected(data.odpoved_1)}
-        />
-
-        <button
-          type="submit"
-          disabled={isSubmitted}
-          className="cursor-pointer ml-auto my-6 rounded shadow bg-green-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
+    <div>
+      {user ? (
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 votes-container"
         >
-          Vote
-        </button>
-      </form>
-    </>
+          <Vote
+            text={data.odpoved_1}
+            // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
+            votes={data.hlasy_1}
+          />
+
+          <Vote
+            text={data.odpoved_2}
+            // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
+            votes={data.hlasy_2}
+          />
+
+          <button
+            type="submit"
+            disabled={isSubmitted}
+            className="cursor-pointer ml-auto my-6 rounded shadow bg-green-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
+          >
+            Vote
+          </button>
+
+          {result ? "approved" : "not approved"}
+        </form>
+      ) : (
+        <p>Loading user data...</p>
+      )}
+    </div>
   );
 }
