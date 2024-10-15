@@ -59,6 +59,14 @@ export default function Questionweight({ data }) {
     fetchUser();
   }, [voters]);
 
+  // Simulate calculating the result
+  useEffect(() => {
+    if (Object.keys(votes).length > 0) {
+      const result = isVotingSuccessful(votes);
+      setResult(result);
+    }
+  }, [votes]);
+
   // Function to calculate total population from users who voted
   function calculateTotalPopulationFromVotes(votes) {
     return Object.keys(votes).reduce((total, voter) => {
@@ -100,18 +108,6 @@ export default function Questionweight({ data }) {
     );
   };
 
-  /*   // Handle vote submission (example)
-  const handleVote = (voterName, vote) => {
-    setVotes({ ...votes, [voterName]: vote }); // Update the votes object
-    console.log(votes, "votes");
-  };
-  // Simulate calculating the result
-  useEffect(() => {
-    if (Object.keys(votes).length > 0) {
-      const votingResult = isVotingSuccessful(votes);
-      setResult(votingResult ? "Voting success!" : "Voting not successful.");
-  }; */
-
   const getVoteData = (vote) => {
     const totalVotes = Object.values(votes).filter((v) => v === vote).length;
     const percentage = totalVotes
@@ -147,10 +143,6 @@ export default function Questionweight({ data }) {
     }
 
     setIsSubmitted(true);
-
-    // Simulate calculating the result
-    const result = isVotingSuccessful(votes);
-    setResult(result);
   }
 
   return (
@@ -164,12 +156,14 @@ export default function Questionweight({ data }) {
             text={data.odpoved_1}
             // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
             votes={data.hlasy_1}
+            percentage={getVoteData("YES").percentage}
           />
 
           <Vote
             text={data.odpoved_2}
             // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
             votes={data.hlasy_2}
+            percentage={getVoteData("NO").percentage}
           />
 
           <button
