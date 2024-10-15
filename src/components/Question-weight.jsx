@@ -13,7 +13,7 @@ export default function Questionweight({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [votes, setVotes] = useState({});
   const [userEmail, setUserEmail] = useState("");
-  const [user, setUser] = useState({});
+  const [userPopulation, setUserwithPopulation] = useState({});
   const [userId, setUserId] = useState("");
   const [result, setResult] = useState(null);
 
@@ -48,16 +48,19 @@ export default function Questionweight({ data }) {
         const userId = user.$id;
         setUserId(userId);
         if (voters[userId]) {
-          setUser({ ...user, population: voters[userId].population });
+          setUserwithPopulation({
+            ...userPopulation,
+            population: voters[userId].population,
+          });
         } // Store matched user with population data
-        console.log(user, "object");
+        console.log(userPopulation, "object");
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
 
     fetchUser();
-  }, [voters]);
+  }, []);
 
   // Simulate calculating the result
   useEffect(() => {
@@ -129,7 +132,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdyes: userEmail,
       });
-      setVotes({ ...votes, [user.$id]: data.odpoved_1 });
+      setVotes({ ...votes, [userEmail]: data.odpoved_1 });
 
       // eslint-disable-next-line react/prop-types
     } else if (selectedVote === data.odpoved_2) {
@@ -139,7 +142,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdno: userEmail,
       });
-      setVotes({ ...votes, [user.$id]: data.odpoved_2 });
+      setVotes({ ...votes, [userEmail]: data.odpoved_2 });
     }
 
     setIsSubmitted(true);
@@ -147,7 +150,7 @@ export default function Questionweight({ data }) {
 
   return (
     <div>
-      {user ? (
+      {userPopulation ? (
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 votes-container"
