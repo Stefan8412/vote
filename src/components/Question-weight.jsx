@@ -13,12 +13,14 @@ export default function Questionweight({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [votes, setVotes] = useState({});
   const [userEmail, setUserEmail] = useState("");
-  const [userPopulation, setUserwithPopulation] = useState({});
+  const [userupdated, setUserUpdated] = useState(null);
   const [userId, setUserId] = useState("");
   const [result, setResult] = useState(null);
+  const [result2, setResult2] = useState(null);
 
   const voters = {
     "66f30fab0027056be9ff": { population: 53203 },
+
     /*   Lucia: { population: 53203 },
     Lubica: { population: 19483 },
     Jan: { population: 31132 },
@@ -40,6 +42,10 @@ export default function Questionweight({ data }) {
     // Add more user IDs and their populations
   };
 
+  const voterspecial = {
+    "670f5b5a000d36d03d2c": { population: 0 },
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -48,12 +54,12 @@ export default function Questionweight({ data }) {
         const userId = user.$id;
         setUserId(userId);
         if (voters[userId]) {
-          setUserwithPopulation({
-            ...userPopulation,
+          setUserUpdated({
+            ...userupdated,
             population: voters[userId].population,
           });
         } // Store matched user with population data
-        console.log(userPopulation, "object");
+        console.log(userupdated, "object");
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -67,6 +73,8 @@ export default function Questionweight({ data }) {
     if (Object.keys(votes).length > 0) {
       const result = isVotingSuccessful(votes);
       setResult(result);
+      const result2 = isVotingSuccessfulspec(votes);
+      setResult2(result2);
     }
   }, [votes]);
 
@@ -80,14 +88,30 @@ export default function Questionweight({ data }) {
     }, 0);
   }
 
+  const isVotingSuccessfulspec = (votes) => {
+    let specialUserVotedYes = false;
+    for (const voterspec of Object.keys(voterspecial)) {
+      if (voterspec === "670f5b5a000d36d03d2c") {
+        console.log(voterspec, "voterspecial");
+        if (votes[voterspec] === "YES") {
+          specialUserVotedYes = true;
+        }
+      }
+    }
+    const result2 = specialUserVotedYes;
+    return result2;
+  };
+
   const isVotingSuccessful = (votes) => {
     let totalWeight = 0;
     let agreedWeight = 0;
     let votedCount = 0;
+    // const specialUserId = "670f5b5a000d36d03d2c";
+    // let specialUserVotedYes = false;
 
     // Calculate total population only from those who voted
     const totalPopulation = calculateTotalPopulationFromVotes(votes);
-    console.log(votes, "votes");
+    console.log(totalPopulation, votes, "votes");
     for (const voter of Object.keys(voters)) {
       if (votes[voter]) {
         const weight = (voters[voter].population / totalPopulation) * 100;
@@ -103,12 +127,13 @@ export default function Questionweight({ data }) {
     const agreementThreshold = votedCount * 0.5;
     const successThreshold = totalWeight * 0.51;
     console.log(agreementThreshold, "agreementThreshold");
-
-    return (
+    const populationVoteSuccessful =
       agreedWeight >= successThreshold &&
       agreedWeight > 0 &&
-      votedCount >= agreementThreshold
-    );
+      votedCount >= agreementThreshold;
+    const result = populationVoteSuccessful;
+    console.log(populationVoteSuccessful, "result");
+    return result;
   };
 
   const getVoteData = (vote) => {
@@ -132,7 +157,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdyes: userEmail,
       });
-      setVotes({ ...votes, [userEmail]: data.odpoved_1 });
+      setVotes({ ...votes, [userId]: data.odpoved_1 });
 
       // eslint-disable-next-line react/prop-types
     } else if (selectedVote === data.odpoved_2) {
@@ -142,7 +167,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdno: userEmail,
       });
-      setVotes({ ...votes, [userEmail]: data.odpoved_2 });
+      setVotes({ ...votes, [userId]: data.odpoved_2 });
     }
 
     setIsSubmitted(true);
@@ -150,7 +175,7 @@ export default function Questionweight({ data }) {
 
   return (
     <div>
-      {userPopulation ? (
+      {userId ? (
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 votes-container"
@@ -177,7 +202,7 @@ export default function Questionweight({ data }) {
             Vote
           </button>
 
-          {result ? "approved" : "not approved"}
+          {result && result2 ? "schválené" : ""}
         </form>
       ) : (
         <p>Loading user data...</p>

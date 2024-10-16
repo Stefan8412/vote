@@ -80,7 +80,7 @@ export default function Question({ data }) {
         <button
           type="submit"
           disabled={isSubmitted}
-          className="cursor-pointer ml-auto my-6 rounded shadow bg-green-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
+          className="cursor-pointer ml-auto my-6 rounded shadow bg-blue-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
         >
           Vote
         </button>

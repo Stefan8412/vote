@@ -101,7 +101,7 @@ body {
 }
 
 .votes:nth-child(1) {
-  --main-color: var(--bg-blue);
+  --main-color: var(--bg-green);
 }
 
 .votes:nth-child(2) {
