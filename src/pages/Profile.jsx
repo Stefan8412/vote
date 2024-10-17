@@ -22,15 +22,24 @@ const Profile = () => {
   Jozef: { population: 2399 },
 };
 
-const totalPopulation = Object.values(voters).reduce((acc, voter) => acc + voter.population, 0);
+ // Function to calculate total population from users who voted
+  function calculateTotalPopulationFromVotes(votes) {
+    return Object.keys(votes).reduce((total, voter) => {
+      if (votes[voter] && voters[voter]) {
+        return total + voters[voter].population;
+      }
+      return total;
+    }, 0);
+  }
 
+    const totalPopulation = calculateTotalPopulationFromVotes(votes);
 // Function to determine if the voting is successful
 function isVotingSuccessful(votes) {
   let totalWeight = 0;
   let agreedWeight = 0;
   let votedCount = 0;
 
-  // Calculate weights based on votes cast
+  // Calculate weights based on votes cast 
   for (const voter of Object.keys(voters)) {
     if (votes[voter]) { // Check if the voter has voted
       const weight = (voters[voter].population / totalPopulation) * 100; // Calculate individual weight
@@ -70,8 +79,14 @@ console.log(result ? "Approved!" : "Not approved.")}
     <div className="container">
       <h1>Hello and vote, there is 2 types of voting:</h1>
       <p>
-        1:Regular based on percentage and 2. based on vote weight (according
-        population), in code snippet there is Javascript solution
+        1st:Regular based of amount of voters and their vote and 2nd. based of
+        vote weight (according population,every voter has certain vote weight
+        based on population), there will be always 18 poeple in voters object
+        and total population will be amount of people which voted(doesnt matter
+        if they voted "for", "against" or "abstain" from voting),there is also
+        one special user without population. , In case voting in group of voters
+        is successful/approved and special user vote "for" overal voting is
+        approved. in code snippet there is Javascript solution
         <pre>
           <code>
             <p>{obj} </p>
