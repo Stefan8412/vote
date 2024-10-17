@@ -48,6 +48,13 @@ export default function Question({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
         itemIdno: userEmail,
       });
+    } else if (selectedVote === data.odpoved_3) {
+      databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+        hlasy_3: data.hlasy_3 + 1,
+      });
+      databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
+        itemIdnovote: userEmail,
+      });
     }
 
     setIsSubmitted(true);
@@ -55,7 +62,7 @@ export default function Question({ data }) {
 
   if (!data) return null;
 
-  const totalVotes = data.hlasy_1 + data.hlasy_2;
+  const totalVotes = data.hlasy_1 + data.hlasy_2 + data.hlasy_3;
 
   return (
     <>
@@ -75,6 +82,12 @@ export default function Question({ data }) {
           text={data.odpoved_2}
           percentage={Math.floor((data.hlasy_2 / totalVotes) * 100)}
           votes={data.hlasy_2}
+        />
+
+        <Vote
+          text={data.odpoved_3}
+          percentage={Math.floor((data.hlasy_3 / totalVotes) * 100)}
+          votes={data.hlasy_3}
         />
 
         <button

@@ -174,6 +174,13 @@ export default function Questionweight({ data }) {
         itemIdno: userEmail,
       });
       setVotes((prevVotes) => ({ ...prevVotes, [userId]: data.odpoved_2 }));
+    } else if (selectedVote === data.odpoved_3) {
+      databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
+        hlasy_3: data.hlasy_3 + 1,
+      });
+      databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
+        itemIdnovote: userEmail,
+      });
     }
 
     setIsSubmitted(true);
@@ -197,6 +204,12 @@ export default function Questionweight({ data }) {
             text={data.odpoved_2}
             // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
             votes={data.hlasy_2}
+            percentage={getVoteData("NO").percentage}
+          />
+          <Vote
+            text={data.odpoved_3}
+            // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
+            votes={data.hlasy_3}
             percentage={getVoteData("NO").percentage}
           />
 
