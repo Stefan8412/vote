@@ -15,8 +15,9 @@ export default function Questionweight({ data }) {
   const [userEmail, setUserEmail] = useState("");
   const [userupdated, setUserUpdated] = useState(null);
   const [userId, setUserId] = useState("");
-  const [result, setResult] = useState(null);
-  const [result2, setResult2] = useState(null);
+  const [result, setResult] = useState(null); // For population-based result
+  const [result2, setResult2] = useState(null); // For special user result
+  const [voteSuccess, setVoteSuccess] = useState(null); // Final combined result
 
   const voters = {
     "66f30fab0027056be9ff": { population: 53203 },
@@ -51,8 +52,8 @@ export default function Questionweight({ data }) {
       try {
         const user = await account.get(); // Fetch the user data
         setUserEmail(user.email); // Set the user email
-        const userId = user.$id;
-        setUserId(userId);
+        //const userId = user.$id;
+        setUserId(user.$id);
         if (voters[userId]) {
           setUserUpdated({
             ...userupdated,
@@ -71,10 +72,15 @@ export default function Questionweight({ data }) {
   // Simulate calculating the result
   useEffect(() => {
     if (Object.keys(votes).length > 0) {
-      const result = isVotingSuccessful(votes);
-      setResult(result);
-      const result2 = isVotingSuccessfulspec(votes);
-      setResult2(result2);
+      const populationResult = isVotingSuccessful(votes); // Population-based result
+      const specialUserResult = isVotingSuccessfulspec(votes); // Special user result
+
+      setResult(populationResult);
+      setResult2(specialUserResult);
+
+      // Combine both results to determine final voting success
+      setVoteSuccess(populationResult && specialUserResult);
+      console.log(votes, "dfjh"); // Check the updated votes object here
     }
   }, [votes]);
 
@@ -98,8 +104,7 @@ export default function Questionweight({ data }) {
         }
       }
     }
-    const result2 = specialUserVotedYes;
-    return result2;
+    return specialUserVotedYes;
   };
 
   const isVotingSuccessful = (votes) => {
@@ -157,17 +162,18 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdyes: userEmail,
       });
-      setVotes({ ...votes, [userId]: data.odpoved_1 });
+      setVotes((prevVotes) => ({ ...prevVotes, [userId]: data.odpoved_1 }));
+    }
 
-      // eslint-disable-next-line react/prop-types
-    } else if (selectedVote === data.odpoved_2) {
+    // eslint-disable-next-line react/prop-types
+    else if (selectedVote === data.odpoved_2) {
       databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
         hlasy_2: data.hlasy_2 + 1,
       });
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         itemIdno: userEmail,
       });
-      setVotes({ ...votes, [userId]: data.odpoved_2 });
+      setVotes((prevVotes) => ({ ...prevVotes, [userId]: data.odpoved_2 }));
     }
 
     setIsSubmitted(true);
@@ -201,8 +207,8 @@ export default function Questionweight({ data }) {
           >
             Vote
           </button>
-
-          {result && result2 ? "schválené" : ""}
+          {/* Display the combined result */}
+          {voteSuccess !== null && (voteSuccess ? "Approved" : "Not Approved")}
         </form>
       ) : (
         <p>Loading user data...</p>
