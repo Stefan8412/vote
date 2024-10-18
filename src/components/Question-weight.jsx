@@ -85,6 +85,35 @@ export default function Questionweight({ data }) {
     }
   }, [votes]);
 
+  useEffect(() => {
+    const fetchUserAndVotes = async () => {
+      try {
+        const user = await account.get(); // Fetch the user data
+        setUserEmail(user.email);
+        setUserId(user.$id);
+
+        // Fetch all previous votes from Appwrite
+        const voteDocuments = await databases.listDocuments(
+          DB_ID,
+          COLLECTION_ID1
+        );
+        console.log(voteDocuments, "votedocument");
+        const fetchedVotes = voteDocuments.documents.reduce((acc, doc) => {
+          acc[doc.userId] = doc.vote; // Assuming vote is stored under `vote` key in Appwrite
+          return acc;
+        }, {});
+
+        // Set the previously stored votes in state
+        setVotes(fetchedVotes);
+        console.log(fetchedVotes, "Fetched votes");
+      } catch (error) {
+        console.error("Error fetching user or votes:", error);
+      }
+    };
+
+    fetchUserAndVotes();
+  }, []);
+
   // Function to calculate total population from users who voted
   function calculateTotalPopulationFromVotes(votes) {
     return Object.keys(votes).reduce((total, voter) => {
@@ -161,9 +190,10 @@ export default function Questionweight({ data }) {
         hlasy_1: data.hlasy_1 + 1,
       });
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
-        itemIdyes: userEmail,
+        userId: userId, // Store the user ID along with the vote
+        vote: "YES",
       });
-      setVotes((prevVotes) => ({ ...prevVotes, [userId]: data.odpoved_1 }));
+      setVotes((prevVotes) => ({ ...prevVotes, [userId]: "YES" }));
     }
 
     // eslint-disable-next-line react/prop-types
@@ -172,16 +202,19 @@ export default function Questionweight({ data }) {
         hlasy_2: data.hlasy_2 + 1,
       });
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
-        itemIdno: userEmail,
+        userId: userId, // Store the user ID along with the vote
+        vote: "NO",
       });
-      setVotes((prevVotes) => ({ ...prevVotes, [userId]: data.odpoved_2 }));
+      setVotes((prevVotes) => ({ ...prevVotes, [userId]: "NO" }));
     } else if (selectedVote === data.odpoved_3) {
       databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
         hlasy_3: data.hlasy_3 + 1,
       });
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
-        itemIdnovote: userEmail,
+        userId: userId, // Store the user ID along with the vote
+        vote: "abstain",
       });
+      setVotes((prevVotes) => ({ ...prevVotes, [userId]: "abstain" }));
     }
 
     setIsSubmitted(true);
