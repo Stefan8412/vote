@@ -22,10 +22,10 @@ const Header = () => {
         {user ? (
           <>
             <Link to="/" className="header--link">
-              Vote
+              Vote-simple
             </Link>
             <Link to="/profile" className="header--link">
-              Greet
+              Intro
             </Link>
             <Link to="/voteweight" className="header--link">
               Vote-Population

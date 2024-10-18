@@ -7,7 +7,8 @@ import {
   COLLECTION_ID2,
   account,
 } from "../lib/appwrite";
-import Vote from "./Vote";
+
+import Vote from "./Vote-W";
 
 export default function Questionweight({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -141,13 +142,13 @@ export default function Questionweight({ data }) {
     return result;
   };
 
-  const getVoteData = (vote) => {
+  /*  const getVoteData = (vote) => {
     const totalVotes = Object.values(votes).filter((v) => v === vote).length;
     const percentage = totalVotes
-      ? (totalVotes / Object.keys(voters).length) * 100
+      ? (totalVotes / Object.values(votes).length) * 100
       : 0;
     return { percentage, totalVotes };
-  };
+  }; */
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -197,20 +198,20 @@ export default function Questionweight({ data }) {
             text={data.odpoved_1}
             // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
             votes={data.hlasy_1}
-            percentage={getVoteData("YES").percentage}
+            //  percentage={getVoteData("YES").percentage}
           />
 
           <Vote
             text={data.odpoved_2}
             // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
             votes={data.hlasy_2}
-            percentage={getVoteData("NO").percentage}
+            //  percentage={getVoteData("NO").percentage}
           />
           <Vote
             text={data.odpoved_3}
             // percentage={Math.floor((data.hlasy_1 / totalPopulation) * 100)}
             votes={data.hlasy_3}
-            percentage={getVoteData("NO").percentage}
+            //   percentage={getVoteData("abstain").percentage}
           />
 
           <button
