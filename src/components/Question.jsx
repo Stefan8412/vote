@@ -25,7 +25,7 @@ export default function Question({ data }) {
     };
 
     fetchUser();
-  }, []);
+  }, [data]);
 
   function handleSubmit(e) {
     e.preventDefault();
