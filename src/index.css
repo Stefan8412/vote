@@ -9,7 +9,7 @@
 }
 
 body {
-  background: #eeeff3;
+  background: #ffffff;
 }
 .container {
   max-width: 90%;
@@ -43,6 +43,10 @@ body {
   color: #000;
   font-weight: 900;
   font-family: "Oleo Script", cursive;
+}
+.logo {
+  height: 55px; /* Adjust the height as needed */
+  width: auto; /* Keep the aspect ratio */
 }
 
 .btn {
@@ -101,7 +105,7 @@ body {
 }
 
 .votes:nth-child(1) {
-  --main-color: var(--bg-green);
+  --main-color: var(--bg-blue);
 }
 
 .votes:nth-child(2) {
