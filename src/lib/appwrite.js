@@ -1,4 +1,4 @@
-import { Client, Databases, Account } from "appwrite";
+import { Client, Databases, Account, Query } from "appwrite";
 
 const client = new Client();
 const DB_ID = "66f0fb81003a34a6c50d";
@@ -21,4 +21,5 @@ export {
   COLLECTION_ID1,
   COLLECTION_ID2,
   COLLECTION_ID3,
+  Query,
 };

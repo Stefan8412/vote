@@ -192,6 +192,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         userId: userId, // Store the user ID along with the vote
         vote: "YES",
+        userEmail: userEmail,
       });
       setVotes((prevVotes) => ({ ...prevVotes, [userId]: "YES" }));
     }
@@ -204,6 +205,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         userId: userId, // Store the user ID along with the vote
         vote: "NO",
+        userEmail: userEmail,
       });
       setVotes((prevVotes) => ({ ...prevVotes, [userId]: "NO" }));
     } else if (selectedVote === data.odpoved_3) {
@@ -213,6 +215,7 @@ export default function Questionweight({ data }) {
       databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
         userId: userId, // Store the user ID along with the vote
         vote: "abstain",
+        userEmail: userEmail,
       });
       setVotes((prevVotes) => ({ ...prevVotes, [userId]: "abstain" }));
     }

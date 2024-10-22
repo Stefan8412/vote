@@ -4,21 +4,27 @@ import {
   account,
   databases,
   DB_ID,
+  Query,
   COLLECTION_ID,
   COLLECTION_ID3,
 } from "../lib/appwrite";
+
 import Vote from "./Vote";
 
 export default function Question({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
+  const [hasVoted, setHasVoted] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const user = await account.get(); // Fetch the user data
-        setUserEmail(user.email); // Set the user ID
+        setUserEmail(user.email);
+        setUserId(user.$id); // Set the user ID
         console.log(user);
+        checkIfUserHasVoted(user.email);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -27,39 +33,78 @@ export default function Question({ data }) {
     fetchUser();
   }, [data]);
 
+  const checkIfUserHasVoted = async (userEmail) => {
+    try {
+      console.log("Checking vote status for:", userEmail, data.$id);
+
+      // Ensure userEmail and data.$id are valid
+      if (!userEmail || !data?.$id) {
+        throw new Error("Missing user email or question ID.");
+      }
+
+      // Query the votes collection to check if the user has voted on this question
+      const votes = await databases.listDocuments(DB_ID, COLLECTION_ID3, [
+        Query.equal("userEmail", [userEmail]), // Wrap value in an array
+        Query.equal("questionId", [data.$id]), // Wrap value in an array
+      ]);
+
+      console.log("Votes query result:", votes.documents);
+
+      // Check if the user has voted on this question
+      if (votes.documents.length > 0) {
+        setHasVoted(true); // The user has already voted
+        setIsSubmitted(true); // Disable the voting form
+      }
+    } catch (error) {
+      console.error("Error checking vote status:", error);
+    }
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const selectedVote = formData.get("vote");
     //data.$id=document
-    if (selectedVote === data.odpoved_1) {
-      databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
-        hlasy_1: data.hlasy_1 + 1,
-      });
-      databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
-        itemIdyes: userEmail,
-      });
-      // eslint-disable-next-line react/prop-types
-    } else if (selectedVote === data.odpoved_2) {
-      databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
-        hlasy_2: data.hlasy_2 + 1,
-      });
-      databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
-        itemIdno: userEmail,
-      });
-    } else if (selectedVote === data.odpoved_3) {
-      databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
-        hlasy_3: data.hlasy_3 + 1,
-      });
-      databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
-        itemIdnovote: userEmail,
-      });
+    if (!hasVoted) {
+      if (selectedVote === data.odpoved_1) {
+        databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+          hlasy_1: data.hlasy_1 + 1,
+        });
+        databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
+          userId: userId, // Store the user ID along with the vote
+          vote: "YES",
+          userEmail: userEmail,
+          questionId: data.$id,
+        });
+        // eslint-disable-next-line react/prop-types
+      } else if (selectedVote === data.odpoved_2) {
+        databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+          hlasy_2: data.hlasy_2 + 1,
+        });
+        databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
+          userId: userId, // Store the user ID along with the vote
+          vote: "NO",
+          userEmail: userEmail,
+          questionId: data.$id,
+        });
+      } else if (selectedVote === data.odpoved_3) {
+        databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+          hlasy_3: data.hlasy_3 + 1,
+        });
+        databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
+          userId: userId, // Store the user ID along with the vote
+          vote: "abstain",
+          userEmail: userEmail,
+          questionId: data.$id,
+        });
+      }
+
+      setIsSubmitted(true);
+      setHasVoted(true);
     }
-
-    setIsSubmitted(true);
   }
-
+  if (!data) return null;
   const totalVotes = data.hlasy_1 + data.hlasy_2 + data.hlasy_3;
 
   return (
