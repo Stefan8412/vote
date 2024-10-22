@@ -60,8 +60,6 @@ export default function Question({ data }) {
     setIsSubmitted(true);
   }
 
-  if (!data) return null;
-
   const totalVotes = data.hlasy_1 + data.hlasy_2 + data.hlasy_3;
 
   return (

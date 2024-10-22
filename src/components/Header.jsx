@@ -14,7 +14,12 @@ const Header = () => {
     <div className="header">
       <div>
         <Link id="header-logo" to="/">
-          <img src="/erbCB.png" alt="logoPSK" className="logo" />
+          <img
+            src="/erbPSK.jpg
+          "
+            alt="logoPSK"
+            className="logo"
+          />
         </Link>
       </div>
 

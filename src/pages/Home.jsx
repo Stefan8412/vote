@@ -64,6 +64,7 @@ const Home = () => {
   };
   const updateSelectedQuestion = async (questionId) => {
     const selectedQuestion = questions.find((q) => q.$id === questionId);
+    console.log(selectedQuestion, "trafena");
     if (selectedQuestion) {
       await databases.updateDocument(
         DB_ID,
@@ -79,16 +80,14 @@ const Home = () => {
 
   return (
     <main className="container max-w-3xl mx-auto px-4 py-10">
-      {isAdmin && (
-        <select value={selectedQuestionId} onChange={handleQuestionChange}>
-          <option value="">Select a question</option>
-          {questions.map((question) => (
-            <option key={question.$id} value={question.$id}>
-              {question.text}
-            </option>
-          ))}
-        </select>
-      )}
+      <select value={selectedQuestionId || ""} onChange={handleQuestionChange}>
+        <option value="">Select a question</option>
+        {questions.map((question) => (
+          <option key={question.$id} value={question.$id}>
+            {question.text}
+          </option>
+        ))}
+      </select>
 
       {selectedQuestion && (
         <Question key={selectedQuestion.$id} data={selectedQuestion} />
