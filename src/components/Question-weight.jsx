@@ -6,6 +6,7 @@ import {
   COLLECTION_ID1,
   COLLECTION_ID2,
   account,
+  Query,
 } from "../lib/appwrite";
 
 import Vote from "./Vote-W";
@@ -19,29 +20,28 @@ export default function Questionweight({ data }) {
   const [result, setResult] = useState(null); // For population-based result
   const [result2, setResult2] = useState(null); // For special user result
   const [voteSuccess, setVoteSuccess] = useState(null); // Final combined result
+  const [hasVoted, setHasVoted] = useState(false);
 
   const voters = {
-    "66f30fab0027056be9ff": { population: 53203 },
+    "6718900f0032f210b946": { population: 53203 },
+    "67188ea6003ca9089150": { population: 19483 },
+    "67188f9e001171d1a606": { population: 31132 },
+    "67188d8b003d5d24fd39": { population: 79305 },
+    "67188f6000257f5eb305": { population: 75561 },
+    "67188d030013bd15c23f": { population: 58560 },
+    "67188fbd0029df3ef6ac": { population: 15319 },
+    "67188ec8002555126f88": { population: 10646 },
+    "67188fe40003ca3a30fc": { population: 126400 },
 
-    /*   Lucia: { population: 53203 },
-    Lubica: { population: 19483 },
-    Jan: { population: 31132 },
-    Vladimir: { population: 79305 },
-    Vladislav: { population: 75561 },
-    Viliam: { population: 58560 },
-    Michal: { population: 15319 },
-    Jan: { population: 10646 }, */
-    "66f5c34b002a60d77af9": { population: 126400 },
-    /*   Frantisek: { population: 92759 },
-    Michal: { population: 61913 },
-    Jozef: { population: 33964 },
-    Martina: { population: 82025 },
-    Jan: { population: 179 },
-    Julia: { population: 3743 },
-    PavolP: { population: 13907 },
-    Anton: { population: 48640 },
-    Jozef: { population: 2399 }, */
-    // Add more user IDs and their populations
+    "67188ef700360836d036": { population: 92759 },
+    "67188f3d001891970145": { population: 61913 },
+    "67188e750008f8a00cd4": { population: 33964 },
+    "6718902e0021c9d89d06": { population: 82025 },
+    "671890c1000ed6276d6d": { population: 179 },
+    "6718904e003cd2f1dec4": { population: 3743 },
+    "6718906e003816179729": { population: 13907 },
+    "6718908b001d308d6bd9": { population: 48640 },
+    "671890da0025ffd3d5f4": { population: 2399 },
   };
 
   const voterspecial = {
@@ -55,6 +55,7 @@ export default function Questionweight({ data }) {
         setUserEmail(user.email); // Set the user email
         //const userId = user.$id;
         setUserId(user.$id);
+        checkIfUserHasVoted(user.email);
         if (voters[userId]) {
           setUserUpdated({
             ...userupdated,
@@ -68,7 +69,32 @@ export default function Questionweight({ data }) {
     };
 
     fetchUser();
-  }, []);
+  }, [data]);
+  const checkIfUserHasVoted = async (userEmail) => {
+    try {
+      console.log("Checking vote status for:", userEmail, data.$id);
+
+      // Ensure userEmail and data.$id are valid
+      if (!userEmail || !data?.$id) {
+        throw new Error("Missing user email or question ID.");
+      }
+
+      // Query the votes collection to check if the user has voted on this question
+      const votes = await databases.listDocuments(DB_ID, COLLECTION_ID1, [
+        Query.equal("userEmail", [userEmail]), // Wrap value in an array
+        Query.equal("questionId", [data.$id]), // Wrap value in an array
+      ]);
+      console.log("Votes query result:", votes.documents);
+
+      // Check if the user has voted on this question
+      if (votes.documents.length > 0) {
+        setHasVoted(true); // The user has already voted
+        setIsSubmitted(true); // Disable the voting form
+      }
+    } catch (error) {
+      console.error("Error checking vote status:", error);
+    }
+  };
 
   // Simulate calculating the result
   useEffect(() => {
@@ -185,44 +211,48 @@ export default function Questionweight({ data }) {
     const formData = new FormData(e.target);
     const selectedVote = formData.get("vote");
     //data.$id=document
-    if (selectedVote === data.odpoved_1) {
-      databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
-        hlasy_1: data.hlasy_1 + 1,
-      });
-      databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
-        userId: userId, // Store the user ID along with the vote
-        vote: "YES",
-        userEmail: userEmail,
-      });
-      setVotes((prevVotes) => ({ ...prevVotes, [userId]: "YES" }));
-    }
+    if (!hasVoted) {
+      if (selectedVote === data.odpoved_1) {
+        databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
+          hlasy_1: data.hlasy_1 + 1,
+        });
+        databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
+          userId: userId, // Store the user ID along with the vote
+          vote: "YES",
+          userEmail: userEmail,
+          questionId: data.$id,
+        });
+        setVotes((prevVotes) => ({ ...prevVotes, [userId]: "YES" }));
+      }
 
-    // eslint-disable-next-line react/prop-types
-    else if (selectedVote === data.odpoved_2) {
-      databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
-        hlasy_2: data.hlasy_2 + 1,
-      });
-      databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
-        userId: userId, // Store the user ID along with the vote
-        vote: "NO",
-        userEmail: userEmail,
-      });
-      setVotes((prevVotes) => ({ ...prevVotes, [userId]: "NO" }));
-    } else if (selectedVote === data.odpoved_3) {
-      databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
-        hlasy_3: data.hlasy_3 + 1,
-      });
-      databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
-        userId: userId, // Store the user ID along with the vote
-        vote: "abstain",
-        userEmail: userEmail,
-      });
-      setVotes((prevVotes) => ({ ...prevVotes, [userId]: "abstain" }));
+      // eslint-disable-next-line react/prop-types
+      else if (selectedVote === data.odpoved_2) {
+        databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
+          hlasy_2: data.hlasy_2 + 1,
+        });
+        databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
+          userId: userId, // Store the user ID along with the vote
+          vote: "NO",
+          userEmail: userEmail,
+          questionId: data.$id,
+        });
+        setVotes((prevVotes) => ({ ...prevVotes, [userId]: "NO" }));
+      } else if (selectedVote === data.odpoved_3) {
+        databases.updateDocument(DB_ID, COLLECTION_ID2, data.$id, {
+          hlasy_3: data.hlasy_3 + 1,
+        });
+        databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
+          userId: userId, // Store the user ID along with the vote
+          vote: "abstain",
+          userEmail: userEmail,
+          questionId: data.$id,
+        });
+        setVotes((prevVotes) => ({ ...prevVotes, [userId]: "abstain" }));
+      }
+      setHasVoted(true);
+      setIsSubmitted(true);
     }
-
-    setIsSubmitted(true);
   }
-
   return (
     <div>
       {userId ? (

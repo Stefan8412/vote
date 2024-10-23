@@ -9,6 +9,7 @@ const Voteweight = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState("");
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
   const [questions, setQuestions] = useState([]);
 
@@ -47,12 +48,39 @@ const Voteweight = () => {
     const questions = await databases.listDocuments(DB_ID, COLLECTION_ID2);
     setQuestions(questions.documents);
   }
+  const handleQuestionChange = (e) => {
+    setSelectedQuestionId(e.target.value);
+    updateSelectedQuestion(e.target.value); // Admin selects a question
+  };
 
+  const updateSelectedQuestion = async (questionId) => {
+    const selectedQuestion = questions.find((q) => q.$id === questionId);
+    console.log(selectedQuestion, "trafena");
+    if (selectedQuestion) {
+      await databases.updateDocument(
+        DB_ID,
+        COLLECTION_ID2,
+        selectedQuestion.$id,
+        {
+          selected: true, // Set a flag to mark it as selected
+        }
+      );
+    }
+  };
+  const selectedQuestion = questions.find((q) => q.$id === selectedQuestionId);
   return (
     <main className="container max-w-3xl mx-auto px-4 py-10">
-      {questions.map((question) => (
-        <Questionweight key={question.$id} data={question} />
-      ))}
+      <select value={selectedQuestionId || ""} onChange={handleQuestionChange}>
+        <option value="">Select a question</option>
+        {questions.map((question) => (
+          <option key={question.$id} value={question.$id}>
+            {question.text}
+          </option>
+        ))}
+      </select>
+      {selectedQuestion && (
+        <Questionweight key={selectedQuestion.$id} data={selectedQuestion} />
+      )}
       {result}
     </main>
   );
