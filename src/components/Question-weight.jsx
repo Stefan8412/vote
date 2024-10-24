@@ -218,7 +218,7 @@ export default function Questionweight({ data }) {
         });
         databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
           userId: userId, // Store the user ID along with the vote
-          vote: "YES",
+          vote: "ZA",
           userEmail: userEmail,
           questionId: data.$id,
         });
@@ -232,7 +232,7 @@ export default function Questionweight({ data }) {
         });
         databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
           userId: userId, // Store the user ID along with the vote
-          vote: "NO",
+          vote: "PROTI",
           userEmail: userEmail,
           questionId: data.$id,
         });
@@ -243,7 +243,7 @@ export default function Questionweight({ data }) {
         });
         databases.createDocument(DB_ID, COLLECTION_ID1, "unique()", {
           userId: userId, // Store the user ID along with the vote
-          vote: "abstain",
+          vote: "ZDRŽAL SA",
           userEmail: userEmail,
           questionId: data.$id,
         });
