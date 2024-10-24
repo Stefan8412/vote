@@ -77,9 +77,9 @@ const Register = () => {
           </div>
         </form>
 
-        <p>
+        {/* <p>
           Máte už účet? <Link to="/login">Prihláste sa</Link>
-        </p>
+        </p> */}
       </div>
     </div>
   );

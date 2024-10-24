@@ -91,9 +91,9 @@ body {
     display: none;
   }
 
-  .header {
+  /* .header {
     justify-content: center;
-  }
+  } */
 }
 
 @media (max-width: 800px) {

@@ -77,23 +77,21 @@ console.log(result ? "Approved!" : "Not approved.")}
   `;
   return (
     <div className="container">
-      <h1>Hello and vote, there is 2 types of voting:</h1>
       <p>
-        1st:Regular based of amount of voters and their vote and 2nd. based of
-        vote weight (according population,every voter has certain vote weight
-        based on population), there will be always 18 poeple in voters object
-        and total population will be amount of people which voted(doesnt matter
-        if they voted "for", "against" or "abstain" from voting),there is also
-        one special user without population. , In case voting in group of voters
-        is successful/approved and special user vote "for" overal voting is
-        approved. in code snippet there is Javascript solution
-        <pre>
-          <code>
-            <p>{obj} </p>
-          </code>
-        </pre>
+        Rada partnerstva je uznášaniaschopná, ak je prítomná nadpolovičná
+        väčšina členov Rady partnerstva. Hlasovanie prebieha dvoma spôsobmi, a
+        to:
       </p>
-      <div></div>
+      <ul className="list-disc pl-5">
+        <li className="border-b border-gray-300 py-2">
+          rovným hlasovaním, pri ktorom má každý člen Rady partnerstva jeden
+          rovný hlas; na schválenie návrhu uznesenia alebo jeho časti je
+          potrebný súhlas nadpolovičnej väčšiny hlasov prítomných členov Rady
+          partnerstva
+        </li>
+
+        <li className="border-b border-gray-300 py-2">váženým hlasovaním</li>
+      </ul>
     </div>
   );
 };

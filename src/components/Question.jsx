@@ -73,7 +73,7 @@ export default function Question({ data }) {
         });
         databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
           userId: userId, // Store the user ID along with the vote
-          vote: "YES",
+          vote: "ZA",
           userEmail: userEmail,
           questionId: data.$id,
         });
@@ -84,7 +84,7 @@ export default function Question({ data }) {
         });
         databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
           userId: userId, // Store the user ID along with the vote
-          vote: "NO",
+          vote: "PROTI",
           userEmail: userEmail,
           questionId: data.$id,
         });
@@ -94,7 +94,7 @@ export default function Question({ data }) {
         });
         databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
           userId: userId, // Store the user ID along with the vote
-          vote: "abstain",
+          vote: "ZDRŽAL SA",
           userEmail: userEmail,
           questionId: data.$id,
         });
@@ -138,7 +138,7 @@ export default function Question({ data }) {
           disabled={isSubmitted}
           className="cursor-pointer ml-auto my-6 rounded shadow bg-blue-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
         >
-          Vote
+          Hlasuj
         </button>
       </form>
     </>

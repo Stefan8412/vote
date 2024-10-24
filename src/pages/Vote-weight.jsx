@@ -71,7 +71,7 @@ const Voteweight = () => {
   return (
     <main className="container max-w-3xl mx-auto px-4 py-10">
       <select value={selectedQuestionId || ""} onChange={handleQuestionChange}>
-        <option value="">Select a question</option>
+        <option value="">Zvoľte hlasovanie</option>
         {questions.map((question) => (
           <option key={question.$id} value={question.$id}>
             {question.text}

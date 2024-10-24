@@ -179,7 +179,7 @@ export default function Questionweight({ data }) {
         totalWeight += weight;
         votedCount++;
 
-        if (votes[voter] === "YES") {
+        if (votes[voter] === "ZA") {
           agreedWeight += weight;
         }
       }
@@ -285,7 +285,7 @@ export default function Questionweight({ data }) {
             disabled={isSubmitted}
             className="cursor-pointer ml-auto my-6 rounded shadow bg-green-400 text-white font-medium text-lg py-2 px-10 transition hover:bg-white hover:text-green-400 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-100"
           >
-            Vote
+            Hlasuj
           </button>
           {/* Display the combined result */}
           {voteSuccess !== null && (voteSuccess ? "Approved" : "Not Approved")}
