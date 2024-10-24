@@ -51,7 +51,7 @@ const Login = () => {
           </div>
 
           <div className="form-field-wrapper">
-            <input type="submit" value="Login" className="btn" />
+            <input type="submit" value="Prihláste sa" className="btn" />
           </div>
         </form>
 

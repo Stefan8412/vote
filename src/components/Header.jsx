@@ -5,9 +5,21 @@ const Header = () => {
   const navigate = useNavigate();
   const { user, logoutUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState("/"); // To track the active menu item
 
+  /* 
   const logoutClick = () => {
     navigate("/login");
+  }; */
+
+  const handleMenuClick = (path) => {
+    setActiveLink(path);
+    if (path === "/logout") {
+      logoutUser();
+      navigate("/login");
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -17,8 +29,8 @@ const Header = () => {
         <div>
           <Link id="header-logo" to="/">
             <img
-              src="/erbpsk.png
-          "
+              src="/erbfarebny.png
+            "
               alt="logoPSK"
               className="logo"
             />
@@ -27,18 +39,33 @@ const Header = () => {
         <nav className="hidden md:flex space-x-4">
           {user ? (
             <>
-              <Link to="/" className="text-white hover:text-gray-300">
+              <button
+                onClick={() => handleMenuClick("/")}
+                className={`text-white hover:text-gray-300 ${
+                  activeLink === "/" ? "text-blue-400 font-bold" : ""
+                }`}
+              >
                 Rovné hlasovanie
-              </Link>
-              <Link to="/profile" className="text-white hover:text-gray-300">
+              </button>
+              <button
+                onClick={() => handleMenuClick("/profile")}
+                className={`text-white hover:text-gray-300 ${
+                  activeLink === "/profile" ? "text-blue-400 font-bold" : ""
+                }`}
+              >
                 Rada partnerstva
-              </Link>
-              <Link to="/voteweight" className="text-white hover:text-gray-300">
+              </button>
+              <button
+                onClick={() => handleMenuClick("/voteweight")}
+                className={`text-white hover:text-gray-300 ${
+                  activeLink === "/voteweight" ? "text-blue-400 font-bold" : ""
+                }`}
+              >
                 Vážené hlasovanie
-              </Link>
+              </button>
 
               <button
-                onClick={logoutUser}
+                onClick={() => handleMenuClick("/logout")}
                 className="ml-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
               >
                 Odhláste sa
@@ -46,8 +73,11 @@ const Header = () => {
             </>
           ) : (
             <Link
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
               to="/login"
+              className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ${
+                activeLink === "/login" ? "text-blue-400 font-bold" : ""
+              }`}
+              onClick={() => handleMenuClick("/login")}
             >
               Prihláste sa
             </Link>
@@ -78,24 +108,33 @@ const Header = () => {
       {isOpen && (
         <div className="md:hidden bg-gray-800">
           <nav className="space-y-2 p-4">
-            <Link to="/" className="block text-white hover:text-gray-300">
-              Vote-simple
-            </Link>
-            <Link
-              to="/profile"
-              className="block text-white hover:text-gray-300"
+            <button
+              onClick={() => handleMenuClick("/")}
+              className={`block text-white hover:text-gray-300 ${
+                activeLink === "/" ? "text-blue-400 font-bold" : ""
+              }`}
             >
-              Intro
-            </Link>
-            <Link
-              to="/voteweight"
-              className="block text-white hover:text-gray-300"
+              Rovné hlasovanie
+            </button>
+            <button
+              onClick={() => handleMenuClick("/profile")}
+              className={`block text-white hover:text-gray-300 ${
+                activeLink === "/profile" ? "text-blue-400 font-bold" : ""
+              }`}
             >
-              Vote-Population
-            </Link>
+              Rada partnerstva
+            </button>
+            <button
+              onClick={() => handleMenuClick("/voteweight")}
+              className={`block text-white hover:text-gray-300 ${
+                activeLink === "/voteweight" ? "text-blue-400 font-bold" : ""
+              }`}
+            >
+              Vážené hlasovanie
+            </button>
             {user ? (
               <button
-                onClick={logoutClick}
+                onClick={() => handleMenuClick("/logout")}
                 className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
               >
                 Odhláste sa
@@ -103,7 +142,10 @@ const Header = () => {
             ) : (
               <Link
                 to="/login"
-                className="block w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2"
+                className={`block w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2 ${
+                  activeLink === "/login" ? "text-blue-400 font-bold" : ""
+                }`}
+                onClick={() => handleMenuClick("/login")}
               >
                 Prihláste sa
               </Link>
