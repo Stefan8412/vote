@@ -90,7 +90,11 @@ console.log(result ? "Approved!" : "Not approved.")}
           partnerstva
         </li>
 
-        <li className="border-b border-gray-300 py-2">váženým hlasovaním</li>
+        <li className="border-b border-gray-300 py-2">
+          váženým hlasovaním, rozhodnutia v komore sa prijímajú na základe
+          jednoduchej väčšiny, ktorá predstavuje 51% váhy hlasov a zároveň
+          súhlasom minimálne 50% hlasujúcich členov
+        </li>
       </ul>
     </div>
   );

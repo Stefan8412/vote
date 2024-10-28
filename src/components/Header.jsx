@@ -20,6 +20,7 @@ const Header = () => {
     } else {
       navigate(path);
     }
+    setIsOpen(false);
   };
 
   return (
