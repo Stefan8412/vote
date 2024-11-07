@@ -70,11 +70,15 @@ const Voteweight = () => {
   const selectedQuestion = questions.find((q) => q.$id === selectedQuestionId);
   return (
     <main className="container max-w-3xl mx-auto px-4 py-10">
-      <select value={selectedQuestionId || ""} onChange={handleQuestionChange}>
+      <select
+        className="h-12 border border-gray-300 text-gray-400 text-base rounded-lg block w-1/4 py-2.5 px-4 focus:outline-none"
+        value={selectedQuestionId || ""}
+        onChange={handleQuestionChange}
+      >
         <option value="">Zvoľte hlasovanie</option>
         {questions.map((question) => (
           <option key={question.$id} value={question.$id}>
-            {question.text}
+            {question.text.split(" ").slice(0, 2).join(" ")}
           </option>
         ))}
       </select>

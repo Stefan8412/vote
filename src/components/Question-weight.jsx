@@ -62,7 +62,6 @@ export default function Questionweight({ data }) {
             population: voters[userId].population,
           });
         } // Store matched user with population data
-        console.log(userupdated, "object");
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -123,7 +122,7 @@ export default function Questionweight({ data }) {
           DB_ID,
           COLLECTION_ID1
         );
-        console.log(voteDocuments, "votedocument");
+
         const fetchedVotes = voteDocuments.documents.reduce((acc, doc) => {
           acc[doc.userId] = doc.vote; // Assuming vote is stored under `vote` key in Appwrite
           return acc;
@@ -154,7 +153,6 @@ export default function Questionweight({ data }) {
     let specialUserVotedYes = false;
     for (const voterspec of Object.keys(voterspecial)) {
       if (voterspec === "670f5b5a000d36d03d2c") {
-        console.log(voterspec, "voterspecial");
         if (votes[voterspec] === "YES") {
           specialUserVotedYes = true;
         }
@@ -193,7 +191,7 @@ export default function Questionweight({ data }) {
       agreedWeight > 0 &&
       votedCount >= agreementThreshold;
     const result = populationVoteSuccessful;
-    console.log(populationVoteSuccessful, "result");
+
     return result;
   };
 
@@ -255,6 +253,7 @@ export default function Questionweight({ data }) {
   }
   return (
     <div>
+      <h2 className="text-3xl text-center font-bold">{data.text}</h2>
       {userId ? (
         <form
           onSubmit={handleSubmit}
