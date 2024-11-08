@@ -71,7 +71,7 @@ const Voteweight = () => {
   return (
     <main className="container max-w-3xl mx-auto px-4 py-10">
       <select
-        className="h-12 border border-gray-300 text-gray-400 text-base rounded-lg block w-1/4 py-2.5 px-4 focus:outline-none"
+        className="h-12 border border-gray-300 text-gray-400 text-base rounded-lg block w-1/2 py-2.5 px-4 focus:outline-none lg:w-1/4"
         value={selectedQuestionId || ""}
         onChange={handleQuestionChange}
       >

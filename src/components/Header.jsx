@@ -106,7 +106,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Dropdown */}
-      {isOpen && (
+      {isOpen && user && (
         <div className="md:hidden bg-gray-800">
           <nav className="space-y-2 p-4">
             <button
