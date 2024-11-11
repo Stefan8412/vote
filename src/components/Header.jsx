@@ -42,24 +42,24 @@ const Header = () => {
             <>
               <button
                 onClick={() => handleMenuClick("/")}
-                className={`text-white hover:text-gray-300 ${
-                  activeLink === "/" ? "text-blue-400 font-bold" : ""
+                className={`text-white hover:text-red-300 ${
+                  activeLink === "/" ? "text-red-400 font-bold" : ""
                 }`}
               >
                 Rovné hlasovanie
               </button>
               <button
                 onClick={() => handleMenuClick("/profile")}
-                className={`text-white hover:text-gray-300 ${
-                  activeLink === "/profile" ? "text-blue-400 font-bold" : ""
+                className={`text-white hover:text-red-300 ${
+                  activeLink === "/profile" ? "text-red-400 font-bold" : ""
                 }`}
               >
-                Rada partnerstva
+                Ako hlasovať
               </button>
               <button
                 onClick={() => handleMenuClick("/voteweight")}
-                className={`text-white hover:text-gray-300 ${
-                  activeLink === "/voteweight" ? "text-blue-400 font-bold" : ""
+                className={`text-white hover:text-red-300 ${
+                  activeLink === "/voteweight" ? "text-red-400 font-bold" : ""
                 }`}
               >
                 Vážené hlasovanie
@@ -123,7 +123,7 @@ const Header = () => {
                 activeLink === "/profile" ? "text-blue-400 font-bold" : ""
               }`}
             >
-              Rada partnerstva
+              Ako hlasovať
             </button>
             <button
               onClick={() => handleMenuClick("/voteweight")}

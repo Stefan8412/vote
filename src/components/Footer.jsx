@@ -27,7 +27,7 @@ const Footer = () => {
         {/* Social Media Links */}
         <div className="flex space-x-4 mt-4 md:mt-0">
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/sk8.samospravnekraje/"
             target="_blank"
             rel="noopener noreferrer"
           >
