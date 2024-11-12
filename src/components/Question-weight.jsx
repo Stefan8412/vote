@@ -120,7 +120,10 @@ export default function Questionweight({ data }) {
         // Fetch all previous votes from Appwrite
         const voteDocuments = await databases.listDocuments(
           DB_ID,
-          COLLECTION_ID1
+          COLLECTION_ID1,
+          [
+            Query.equal("questionId", [data.$id]), // Fetch votes only for the specific question ID
+          ]
         );
 
         const fetchedVotes = voteDocuments.documents.reduce((acc, doc) => {
@@ -153,7 +156,7 @@ export default function Questionweight({ data }) {
     let specialUserVotedYes = false;
     for (const voterspec of Object.keys(voterspecial)) {
       if (voterspec === "670f5b5a000d36d03d2c") {
-        if (votes[voterspec] === "YES") {
+        if (votes[voterspec] === "ZA") {
           specialUserVotedYes = true;
         }
       }
