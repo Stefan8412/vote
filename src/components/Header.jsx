@@ -111,24 +111,24 @@ const Header = () => {
           <nav className="space-y-2 p-4">
             <button
               onClick={() => handleMenuClick("/")}
-              className={`block text-white hover:text-gray-300 ${
-                activeLink === "/" ? "text-blue-400 font-bold" : ""
+              className={`block text-white hover:text-red-300 ${
+                activeLink === "/" ? "text-red-400 font-bold" : ""
               }`}
             >
               Rovné hlasovanie
             </button>
             <button
               onClick={() => handleMenuClick("/profile")}
-              className={`block text-white hover:text-gray-300 ${
-                activeLink === "/profile" ? "text-blue-400 font-bold" : ""
+              className={`block text-white hover:text-red-300 ${
+                activeLink === "/profile" ? "text-red-400 font-bold" : ""
               }`}
             >
               Ako hlasovať
             </button>
             <button
               onClick={() => handleMenuClick("/voteweight")}
-              className={`block text-white hover:text-gray-300 ${
-                activeLink === "/voteweight" ? "text-blue-400 font-bold" : ""
+              className={`block text-white hover:text-red-300 ${
+                activeLink === "/voteweight" ? "text-red-400 font-bold" : ""
               }`}
             >
               Vážené hlasovanie

@@ -219,6 +219,7 @@ export default function Questionweight({ data }) {
           vote: "ZA",
           userEmail: userEmail,
           questionId: data.$id,
+          question: data.text,
         });
         setVotes((prevVotes) => ({ ...prevVotes, [userId]: "YES" }));
       }
@@ -233,6 +234,7 @@ export default function Questionweight({ data }) {
           vote: "PROTI",
           userEmail: userEmail,
           questionId: data.$id,
+          question: data.text,
         });
         setVotes((prevVotes) => ({ ...prevVotes, [userId]: "NO" }));
       } else if (selectedVote === data.odpoved_3) {
@@ -244,6 +246,7 @@ export default function Questionweight({ data }) {
           vote: "ZDRŽAL SA",
           userEmail: userEmail,
           questionId: data.$id,
+          question: data.text,
         });
         setVotes((prevVotes) => ({ ...prevVotes, [userId]: "abstain" }));
       }

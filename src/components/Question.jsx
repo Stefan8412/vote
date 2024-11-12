@@ -76,6 +76,7 @@ export default function Question({ data }) {
           vote: "ZA",
           userEmail: userEmail,
           questionId: data.$id,
+          question: data.text,
         });
         // eslint-disable-next-line react/prop-types
       } else if (selectedVote === data.odpoved_2) {
@@ -87,6 +88,7 @@ export default function Question({ data }) {
           vote: "PROTI",
           userEmail: userEmail,
           questionId: data.$id,
+          question: data.text,
         });
       } else if (selectedVote === data.odpoved_3) {
         databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
@@ -97,6 +99,7 @@ export default function Question({ data }) {
           vote: "ZDRŽAL SA",
           userEmail: userEmail,
           questionId: data.$id,
+          question: data.text,
         });
       }
 
