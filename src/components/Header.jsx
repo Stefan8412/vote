@@ -37,6 +37,12 @@ const Header = () => {
             />
           </Link>
         </div>
+        {/* Show logged-in user info */}
+        <div className="text-gray-300">
+          {user && (
+            <span className="mr-4">Vitajte, {user.name || user.email} !</span>
+          )}
+        </div>
         <nav className="hidden md:flex space-x-4">
           {user ? (
             <>

@@ -47,7 +47,7 @@ export default function Questionweight({ data }) {
   const voterspecial = {
     "670f5b5a000d36d03d2c": { population: 0 },
   };
-
+  console.log(voteSuccess, "votesuccess");
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -125,7 +125,7 @@ export default function Questionweight({ data }) {
             Query.equal("questionId", [data.$id]), // Fetch votes only for the specific question ID
           ]
         );
-
+        console.log(voteDocuments, "voteDocuments");
         const fetchedVotes = voteDocuments.documents.reduce((acc, doc) => {
           acc[doc.userId] = doc.vote; // Assuming vote is stored under `vote` key in Appwrite
           return acc;
@@ -299,9 +299,7 @@ export default function Questionweight({ data }) {
                 {"Schválené"}
               </button>
             ) : (
-              <button className="bg-red-500 text-white font-bold py-2 px-4">
-                {"Neschválené"}
-              </button>
+              ""
             ))}
         </form>
       ) : (
