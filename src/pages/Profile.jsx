@@ -1,8 +1,30 @@
 const Profile = () => {
   return (
     <div className="p-4 mt-4">
-      <h1 className="text-4xl text-center font-semibold mb-6">Ako hlasovať</h1>
+      <h1 className="text-4xl text-center font-semibold mb-6">
+        Rada partnerstva
+      </h1>
+
       <div className="container">
+        <p>
+          Rada partnerstva je uznášaniaschopná, ak je prítomná nadpolovičná
+          väčšina členov Rady partnerstva. Hlasovanie prebieha dvoma spôsobmi, a
+          to:
+        </p>
+        <ul className="list-disc pl-5">
+          <li className="border-b border-gray-300 py-2">
+            rovným hlasovaním, pri ktorom má každý člen Rady partnerstva jeden
+            rovný hlas; na schválenie návrhu uznesenia alebo jeho časti je
+            potrebný súhlas nadpolovičnej väčšiny hlasov prítomných členov Rady
+            partnerstva
+          </li>
+
+          <li className="border-b border-gray-300 py-2">
+            váženým hlasovaním, rozhodnutia v komore sa prijímajú na základe
+            jednoduchej väčšiny, ktorá predstavuje 51% váhy hlasov a zároveň
+            súhlasom minimálne 50% hlasujúcich členov
+          </li>
+        </ul>
         <div className="flex flex-col md:grid grid-cols-12 text-gray-50">
           <div className="flex md:contents">
             <div className="col-start-2 col-end-4 mr-10 md:mx-auto relative">
