@@ -42,7 +42,7 @@ const Header = () => {
             <>
               <button
                 onClick={() => handleMenuClick("/")}
-                className={`text-white hover:text-red-300 ${
+                className={` hover:text-red-300 ${
                   activeLink === "/" ? "text-red-400 font-bold" : ""
                 }`}
               >
@@ -50,7 +50,7 @@ const Header = () => {
               </button>
               <button
                 onClick={() => handleMenuClick("/profile")}
-                className={`text-white hover:text-red-300 ${
+                className={` hover:text-red-300 ${
                   activeLink === "/profile" ? "text-red-400 font-bold" : ""
                 }`}
               >
@@ -58,7 +58,7 @@ const Header = () => {
               </button>
               <button
                 onClick={() => handleMenuClick("/voteweight")}
-                className={`text-white hover:text-red-300 ${
+                className={` hover:text-red-300 ${
                   activeLink === "/voteweight" ? "text-red-400 font-bold" : ""
                 }`}
               >
@@ -111,7 +111,7 @@ const Header = () => {
           <nav className="space-y-2 p-4">
             <button
               onClick={() => handleMenuClick("/")}
-              className={`block text-white hover:text-red-300 ${
+              className={`block  hover:text-red-300 ${
                 activeLink === "/" ? "text-red-400 font-bold" : ""
               }`}
             >
@@ -119,7 +119,7 @@ const Header = () => {
             </button>
             <button
               onClick={() => handleMenuClick("/profile")}
-              className={`block text-white hover:text-red-300 ${
+              className={`block  hover:text-red-300 ${
                 activeLink === "/profile" ? "text-red-400 font-bold" : ""
               }`}
             >
@@ -127,7 +127,7 @@ const Header = () => {
             </button>
             <button
               onClick={() => handleMenuClick("/voteweight")}
-              className={`block text-white hover:text-red-300 ${
+              className={`block  hover:text-red-300 ${
                 activeLink === "/voteweight" ? "text-red-400 font-bold" : ""
               }`}
             >
@@ -143,8 +143,8 @@ const Header = () => {
             ) : (
               <Link
                 to="/login"
-                className={`block w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2 ${
-                  activeLink === "/login" ? "text-blue-400 font-bold" : ""
+                className={`block w-full bg-blue-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2 ${
+                  activeLink === "/login" ? "text-red-400 font-bold" : ""
                 }`}
                 onClick={() => handleMenuClick("/login")}
               >
