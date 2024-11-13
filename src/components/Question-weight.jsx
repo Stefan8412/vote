@@ -140,7 +140,7 @@ export default function Questionweight({ data }) {
     };
 
     fetchUserAndVotes();
-  }, []);
+  }, [votes]);
 
   // Function to calculate total population from users who voted
   function calculateTotalPopulationFromVotes(votes) {
