@@ -26,6 +26,9 @@ const Login = () => {
 
   return (
     <div className="container">
+      <h2 className="text-3xl text-center font-bold">
+        {"Rada partnerstva PSK-Hlasovanie"}
+      </h2>
       <div className="login-register-container">
         <form onSubmit={handleSubmit} ref={loginForm}>
           <div className="form-field-wrapper">
