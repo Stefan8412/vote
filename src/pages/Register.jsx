@@ -22,6 +22,7 @@ const Register = () => {
     const userInfo = { name, email, password1, password2 };
 
     registerUser(userInfo);
+    alert("Účet uspešne vytvorený, prihláste sa");
   };
 
   return (
