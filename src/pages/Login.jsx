@@ -58,9 +58,9 @@ const Login = () => {
           </div>
         </form>
 
-        {/* <p>
+        <p>
           Nemáte účet? <Link to="/register">Registrujte sa</Link>
-        </p> */}
+        </p>
       </div>
     </div>
   );

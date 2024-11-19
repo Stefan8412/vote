@@ -47,14 +47,6 @@ const Header = () => {
           {user ? (
             <>
               <button
-                onClick={() => handleMenuClick("/")}
-                className={` hover:text-red-300 ${
-                  activeLink === "/" ? "text-red-400 font-bold" : ""
-                }`}
-              >
-                Rovné hlasovanie
-              </button>
-              <button
                 onClick={() => handleMenuClick("/profile")}
                 className={` hover:text-red-300 ${
                   activeLink === "/profile" ? "text-red-400 font-bold" : ""
@@ -62,6 +54,15 @@ const Header = () => {
               >
                 Ako hlasovať
               </button>
+              <button
+                onClick={() => handleMenuClick("/")}
+                className={` hover:text-red-300 ${
+                  activeLink === "/" ? "text-red-400 font-bold" : ""
+                }`}
+              >
+                Rovné hlasovanie
+              </button>
+
               <button
                 onClick={() => handleMenuClick("/voteweight")}
                 className={` hover:text-red-300 ${
