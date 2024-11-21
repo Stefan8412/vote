@@ -1,7 +1,7 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import { account } from "../lib/appwrite";
-import { useNavigate } from "react-router-dom";
-import { ID } from "appwrite";
+import { createContext, useState, useEffect, useContext } from 'react';
+import { account } from '../lib/appwrite';
+import { useNavigate } from 'react-router-dom';
+import { ID } from 'appwrite';
 
 const AuthContext = createContext();
 
@@ -16,12 +16,21 @@ export const AuthProvider = ({ children }) => {
     checkUserStatus();
   }, []);
 
+  const deleteExistingSession = async () => {
+    try {
+      await account.deleteSession('current');
+    } catch (error) {
+      console.log('No existing session to delete');
+    }
+  };
+
   const loginUser = async (userInfo) => {
     setLoading(true);
 
-    console.log("userInfo", userInfo);
+    console.log('userInfo', userInfo);
 
     try {
+      await deleteExistingSession();
       let response = await account.createEmailPasswordSession(
         userInfo.email,
         userInfo.password
@@ -35,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logoutUser = async () => {
-    await account.deleteSession("current");
+    await account.deleteSession('current');
     setUser(null);
   };
 
@@ -43,6 +52,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
 
     try {
+      await deleteExistingSession();
       let response = await account.create(
         ID.unique(),
         userInfo.email,
@@ -53,7 +63,7 @@ export const AuthProvider = ({ children }) => {
       await account.createEmailSession(userInfo.email, userInfo.password1);
       let accountDetails = await account.get();
       setUser(accountDetails);
-      navigate("/");
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
@@ -65,7 +75,9 @@ export const AuthProvider = ({ children }) => {
     try {
       let accountDetails = await account.get();
       setUser(accountDetails);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
     setLoading(false);
   };
 

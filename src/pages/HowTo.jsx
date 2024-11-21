@@ -1,4 +1,4 @@
-const Profile = () => {
+const HowTo = () => {
   return (
     <div className="p-4 mt-4">
       <h1 className="text-4xl text-center font-semibold mb-6">
@@ -103,4 +103,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default HowTo;

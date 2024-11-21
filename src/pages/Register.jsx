@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../utils/AuthContext";
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../utils/AuthContext';
 
 const Register = () => {
   const registerForm = useRef(null);
@@ -15,14 +15,14 @@ const Register = () => {
     const password2 = registerForm.current.password2.value;
 
     if (password1 !== password2) {
-      alert("Passwords did not match!");
+      alert('Heslá sa nezhodujú');
       return;
     }
 
     const userInfo = { name, email, password1, password2 };
 
     registerUser(userInfo);
-    alert("Účet uspešne vytvorený, prihláste sa");
+    alert('Účet úspešne vytvorený, prihláste sa');
   };
 
   return (
