@@ -2,12 +2,13 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { account } from '../lib/appwrite';
 import { useNavigate } from 'react-router-dom';
 import { ID } from 'appwrite';
+import { useToast } from '../components/hooks/use-toast';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-
+  const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -35,6 +36,10 @@ export const AuthProvider = ({ children }) => {
         userInfo.email,
         userInfo.password
       );
+      toast({
+        title: 'Prihlásenie úspešné',
+        description: 'môžte vybrať hlasovanie.',
+      });
       let accountDetails = await account.get();
       setUser(accountDetails);
     } catch (error) {

@@ -15,14 +15,21 @@ const Register = () => {
     const password2 = registerForm.current.password2.value;
 
     if (password1 !== password2) {
-      alert('Heslá sa nezhodujú');
+      alert('hesla sa nezhodujú');
+      return;
+    }
+    if (name === '' || email === '' || password1 === '' || password2 === '') {
+      alert('Prosím vyplnťe všetky polia');
+      return;
+    }
+    if (password1.length < 8) {
+      alert('Heslo musí obsahovať minimálne 8 znakov');
       return;
     }
 
     const userInfo = { name, email, password1, password2 };
 
     registerUser(userInfo);
-    alert('Účet úspešne vytvorený, prihláste sa');
   };
 
   return (
