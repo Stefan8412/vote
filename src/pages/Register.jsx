@@ -38,13 +38,13 @@ const Register = () => {
       <div className="login-register-container">
         <form ref={registerForm} onSubmit={handleSubmit}>
           <div className="form-field-wrapper">
-            <label>Meno:</label>
+            <label>Organizácia:</label>
             <input
               className="inputlogin"
               required
               type="text"
               name="name"
-              placeholder="Napíšte meno..."
+              placeholder="Napíšte meno organizácie..."
             />
           </div>
 
