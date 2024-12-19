@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 import { useState } from 'react';
+
 const Header = () => {
   const navigate = useNavigate();
   const { user, logoutUser } = useAuth();
@@ -78,6 +79,12 @@ const Header = () => {
               >
                 Odhláste sa
               </button>
+              <button
+                onClick={() => navigate('/reset-password')}
+                className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
+              >
+                Zmeniť heslo
+              </button>
             </>
           ) : (
             <Link
@@ -117,14 +124,6 @@ const Header = () => {
         <div className="md:hidden bg-gray-800">
           <nav className="space-y-2 p-4">
             <button
-              onClick={() => handleMenuClick('/')}
-              className={`block  hover:text-red-300 ${
-                activeLink === '/' ? 'text-red-400 font-bold' : ''
-              }`}
-            >
-              Rovné hlasovanie
-            </button>
-            <button
               onClick={() => handleMenuClick('/howto')}
               className={`block  hover:text-red-300 ${
                 activeLink === '/howto' ? 'text-red-400 font-bold' : ''
@@ -132,6 +131,15 @@ const Header = () => {
             >
               Ako hlasovať
             </button>
+            <button
+              onClick={() => handleMenuClick('/')}
+              className={`block  hover:text-red-300 ${
+                activeLink === '/' ? 'text-red-400 font-bold' : ''
+              }`}
+            >
+              Rovné hlasovanie
+            </button>
+
             <button
               onClick={() => handleMenuClick('/voteweight')}
               className={`block  hover:text-red-300 ${
@@ -141,12 +149,20 @@ const Header = () => {
               Vážené hlasovanie
             </button>
             {user ? (
-              <button
-                onClick={() => handleMenuClick('/logout')}
-                className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
-              >
-                Odhláste sa
-              </button>
+              <>
+                <button
+                  onClick={() => handleMenuClick('/logout')}
+                  className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
+                >
+                  Odhláste sa
+                </button>
+                <button
+                  onClick={() => navigate('/reset-password')}
+                  className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
+                >
+                  Zmeniť heslo
+                </button>
+              </>
             ) : (
               <Link
                 to="/login"
