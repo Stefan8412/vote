@@ -79,12 +79,12 @@ const Header = () => {
               >
                 Odhláste sa
               </button>
-              <button
+              {/*  <button
                 onClick={() => navigate('/reset-password')}
                 className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
               >
                 Zmeniť heslo
-              </button>
+              </button> */}
             </>
           ) : (
             <Link
@@ -156,12 +156,12 @@ const Header = () => {
                 >
                   Odhláste sa
                 </button>
-                <button
+                {/*  <button
                   onClick={() => navigate('/reset-password')}
                   className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mt-2"
                 >
                   Zmeniť heslo
-                </button>
+                </button> */}
               </>
             ) : (
               <Link
