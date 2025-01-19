@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import Voteweight from './pages/Vote-weight';
 
 import Layout from './components/Layout';
-import GDPR from './pages/GDPRE';
+
 import UserCounter from './pages/Users';
 
 function App() {
