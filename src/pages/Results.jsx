@@ -6,6 +6,7 @@ import {
   COLLECTION_ID3,
   Query,
 } from '../lib/appwrite';
+import { saveAs } from 'file-saver';
 
 export default function Results() {
   const [questions, setQuestions] = useState([]); // List of all questions
@@ -32,6 +33,18 @@ export default function Results() {
 
     fetchQuestions();
   }, []);
+  // Export results to CSV
+  const exportResultsToCSV = () => {
+    const csvHeader = 'User Email,Vote\n';
+    const csvBody = results
+      .map((result) => `${result.userEmail},${result.vote}`)
+      .join('\n');
+
+    const csvContent = csvHeader + csvBody;
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'results.csv');
+  };
 
   // Fetch results and calculate vote counts for the selected question
   useEffect(() => {
@@ -114,6 +127,14 @@ export default function Results() {
               <strong>ZDRŽAL SA:</strong> {voteCounts['ZDRŽAL SA'] || 0}
             </p>
           </div>
+
+          {/* Export to CSV button */}
+          <button
+            onClick={exportResultsToCSV}
+            className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
+          >
+            Stiahni výsledky
+          </button>
 
           {/* Display detailed results */}
           <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
