@@ -1,53 +1,136 @@
 import { useState, useEffect } from 'react';
+import {
+  databases,
+  DB_ID,
+  COLLECTION_ID,
+  COLLECTION_ID3,
+  Query,
+} from '../lib/appwrite';
 
-import { DB_ID, COLLECTION_ID, databases } from '../lib/appwrite';
+export default function Results() {
+  const [questions, setQuestions] = useState([]); // List of all questions
+  const [selectedQuestionId, setSelectedQuestionId] = useState(''); // Currently selected question ID
+  const [results, setResults] = useState([]); // Raw results for the selected question
+  const [voteCounts, setVoteCounts] = useState({}); // Aggregated vote counts
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-const Results = () => {
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  // Fetch all questions on component mount
   useEffect(() => {
-    async function fetchResults() {
+    const fetchQuestions = async () => {
       try {
         const response = await databases.listDocuments(DB_ID, COLLECTION_ID);
-        setResults(response.documents); // Assuming `documents` contains vote data
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching results:', error);
-        setLoading(false);
+        setQuestions(response.documents);
+        if (response.documents.length > 0) {
+          setSelectedQuestionId(response.documents[0].$id); // Default to the first question
+        }
+      } catch (err) {
+        console.error('Error fetching questions:', err);
+        setError('Failed to load questions.');
       }
-    }
+    };
 
-    fetchResults();
+    fetchQuestions();
   }, []);
 
-  if (loading) return <p>Loading results...</p>;
+  // Fetch results and calculate vote counts for the selected question
+  useEffect(() => {
+    if (!selectedQuestionId) return;
+
+    const fetchResults = async () => {
+      try {
+        setLoading(true);
+        const response = await databases.listDocuments(DB_ID, COLLECTION_ID3, [
+          Query.equal('questionId', selectedQuestionId),
+        ]);
+        setResults(response.documents);
+
+        // Calculate vote counts
+        const counts = response.documents.reduce((acc, result) => {
+          acc[result.vote] = (acc[result.vote] || 0) + 1;
+          return acc;
+        }, {});
+        setVoteCounts(counts);
+      } catch (err) {
+        console.error('Error fetching results:', err);
+        setError('Failed to load results.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResults();
+  }, [selectedQuestionId]);
+
+  // Handle dropdown change
+  const handleQuestionChange = (e) => {
+    setSelectedQuestionId(e.target.value);
+  };
 
   return (
-    <div>
-      <h1>Výsledky hlasovania</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Otázka</th>
-            <th>ZA</th>
-            <th>PROTI</th>
-            <th>ZDRŽAL SA</th>
-          </tr>
-        </thead>
-        <tbody>
-          {results.map((result) => (
-            <tr key={result.$id}>
-              <td>{result.text}</td>
-              <td>{result.hlasy_1}</td>
-              <td>{result.hlasy_2}</td>
-              <td>{result.hlasy_3}</td>
-            </tr>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Výsledky</h1>
+
+      {/* Dropdown to select a question */}
+      <div className="mb-4">
+        <label htmlFor="questionSelect" className="block mb-2 font-medium">
+          Vyberte otázku:
+        </label>
+        <select
+          id="questionSelect"
+          value={selectedQuestionId}
+          onChange={handleQuestionChange}
+          className="p-2 border rounded w-full"
+        >
+          {questions.map((question) => (
+            <option key={question.$id} value={question.$id}>
+              {question.text}
+            </option>
           ))}
-        </tbody>
-      </table>
+        </select>
+      </div>
+
+      {/* Display results */}
+      {loading ? (
+        <p>Loading results...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
+        <div className="results">
+          <h2 className="text-xl font-semibold mb-4">
+            Hlasovanie:{' '}
+            {questions.find((q) => q.$id === selectedQuestionId)?.text || ''}
+          </h2>
+
+          {/* Display aggregated vote counts */}
+          <div className="mb-4">
+            <p>
+              <strong>ZA:</strong> {voteCounts['ZA'] || 0}
+            </p>
+            <p>
+              <strong>PROTI:</strong> {voteCounts['PROTI'] || 0}
+            </p>
+            <p>
+              <strong>ZDRŽAL SA:</strong> {voteCounts['ZDRŽAL SA'] || 0}
+            </p>
+          </div>
+
+          {/* Display detailed results */}
+          <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
+          <ul>
+            {results.map((result) => (
+              <li key={result.$id} className="p-2 border-b">
+                <p>
+                  <strong>Hlasoval:</strong> {result.vote}
+                </p>
+                <p>
+                  <strong>Používateľ:</strong> {result.userEmail}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
-};
-
-export default Results;
+}
