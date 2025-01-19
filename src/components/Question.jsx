@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   account,
   databases,
@@ -7,14 +7,14 @@ import {
   Query,
   COLLECTION_ID,
   COLLECTION_ID3,
-} from "../lib/appwrite";
+} from '../lib/appwrite';
 
-import Vote from "./Vote";
+import Vote from './Vote';
 
 export default function Question({ data }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const [hasVoted, setHasVoted] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function Question({ data }) {
         console.log(user);
         checkIfUserHasVoted(user.email);
       } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error('Error fetching user:', error);
       }
     };
 
@@ -35,20 +35,20 @@ export default function Question({ data }) {
 
   const checkIfUserHasVoted = async (userEmail) => {
     try {
-      console.log("Checking vote status for:", userEmail, data.$id);
+      console.log('Checking vote status for:', userEmail, data.$id);
 
       // Ensure userEmail and data.$id are valid
       if (!userEmail || !data?.$id) {
-        throw new Error("Missing user email or question ID.");
+        throw new Error('Missing user email or question ID.');
       }
 
       // Query the votes collection to check if the user has voted on this question
       const votes = await databases.listDocuments(DB_ID, COLLECTION_ID3, [
-        Query.equal("userEmail", [userEmail]), // Wrap value in an array
-        Query.equal("questionId", [data.$id]), // Wrap value in an array
+        Query.equal('userEmail', [userEmail]), // Wrap value in an array
+        Query.equal('questionId', [data.$id]), // Wrap value in an array
       ]);
 
-      console.log("Votes query result:", votes.documents);
+      console.log('Votes query result:', votes.documents);
 
       // Check if the user has voted on this question
       if (votes.documents.length > 0) {
@@ -56,7 +56,7 @@ export default function Question({ data }) {
         setIsSubmitted(true); // Disable the voting form
       }
     } catch (error) {
-      console.error("Error checking vote status:", error);
+      console.error('Error checking vote status:', error);
     }
   };
 
@@ -64,49 +64,53 @@ export default function Question({ data }) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const selectedVote = formData.get("vote");
-    //data.$id=document
-    if (!hasVoted) {
-      if (selectedVote === data.odpoved_1) {
-        databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
-          hlasy_1: data.hlasy_1 + 1,
-        });
-        databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
-          userId: userId, // Store the user ID along with the vote
-          vote: "ZA",
-          userEmail: userEmail,
-          questionId: data.$id,
-          question: data.text,
-        });
-        // eslint-disable-next-line react/prop-types
-      } else if (selectedVote === data.odpoved_2) {
-        databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
-          hlasy_2: data.hlasy_2 + 1,
-        });
-        databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
-          userId: userId, // Store the user ID along with the vote
-          vote: "PROTI",
-          userEmail: userEmail,
-          questionId: data.$id,
-          question: data.text,
-        });
-      } else if (selectedVote === data.odpoved_3) {
-        databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
-          hlasy_3: data.hlasy_3 + 1,
-        });
-        databases.createDocument(DB_ID, COLLECTION_ID3, "unique()", {
-          userId: userId, // Store the user ID along with the vote
-          vote: "ZDRŽAL SA",
-          userEmail: userEmail,
-          questionId: data.$id,
-          question: data.text,
-        });
-      }
+    const selectedVote = formData.get('vote');
 
-      setIsSubmitted(true);
-      setHasVoted(true);
+    if (!hasVoted) {
+      const handleVoteUpdate = async (field, voteLabel) => {
+        try {
+          // Fetch the latest data for this question
+          const document = await databases.getDocument(
+            DB_ID,
+            COLLECTION_ID,
+            data.$id
+          );
+
+          // Increment the selected vote field
+          const updatedVotes = document[field] + 1;
+
+          // Update the document with the new vote count
+          await databases.updateDocument(DB_ID, COLLECTION_ID, data.$id, {
+            [field]: updatedVotes,
+          });
+
+          // Record the vote in the votes collection
+          await databases.createDocument(DB_ID, COLLECTION_ID3, 'unique()', {
+            userId: userId, // Store the user ID along with the vote
+            vote: voteLabel,
+            userEmail: userEmail,
+            questionId: data.$id,
+            question: data.text,
+          });
+
+          // Update local state
+          setIsSubmitted(true);
+          setHasVoted(true);
+        } catch (error) {
+          console.error('Error updating vote:', error);
+        }
+      };
+
+      if (selectedVote === data.odpoved_1) {
+        handleVoteUpdate('hlasy_1', 'ZA');
+      } else if (selectedVote === data.odpoved_2) {
+        handleVoteUpdate('hlasy_2', 'PROTI');
+      } else if (selectedVote === data.odpoved_3) {
+        handleVoteUpdate('hlasy_3', 'ZDRŽAL SA');
+      }
     }
   }
+
   if (!data) return null;
   const totalVotes = data.hlasy_1 + data.hlasy_2 + data.hlasy_3;
 

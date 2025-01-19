@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   client,
   databases,
   DB_ID,
   COLLECTION_ID,
   account,
-} from "../lib/appwrite";
-import Question from "../components/Question";
+} from '../lib/appwrite';
+import Question from '../components/Question';
 
 const Home = () => {
   const [questions, setQuestions] = useState([]);
@@ -20,10 +20,10 @@ const Home = () => {
     const unsubscribe = client.subscribe(
       `databases.${DB_ID}.collections.${COLLECTION_ID}.documents`,
       (res) => {
-        console.log(res, "res");
+        console.log(res, 'res');
 
         if (
-          res.events.includes("databases.*.collections.*.documents.*.update")
+          res.events.includes('databases.*.collections.*.documents.*.update')
         ) {
           setQuestions((prevQuestions) => {
             return prevQuestions.map((question) => {
@@ -35,7 +35,7 @@ const Home = () => {
             });
           });
 
-          console.log("Updated Question");
+          console.log('Updated Question');
         }
       }
     );
@@ -47,14 +47,14 @@ const Home = () => {
   const checkIfAdmin = async () => {
     const user = await account.get();
     // Implement your admin check logic here
-    if (user.email === "stefan@hancar.sk") {
+    if (user.email === 'stefan@hancar.sk') {
       setIsAdmin(true); // Replace with your actual logic
     }
   };
 
   async function getQuestionsFromDB() {
     const questions = await databases.listDocuments(DB_ID, COLLECTION_ID);
-    console.log(questions, "blabla");
+    console.log(questions, 'blabla');
     setQuestions(questions.documents);
   }
 
@@ -64,7 +64,7 @@ const Home = () => {
   };
   const updateSelectedQuestion = async (questionId) => {
     const selectedQuestion = questions.find((q) => q.$id === questionId);
-    console.log(selectedQuestion, "trafena");
+    console.log(selectedQuestion, 'trafena');
     if (selectedQuestion) {
       await databases.updateDocument(
         DB_ID,
@@ -82,13 +82,13 @@ const Home = () => {
     <main className="container max-w-3xl mx-auto px-4 py-10">
       <select
         className="h-12 border border-gray-300 text-gray-400 text-base rounded-lg block w-1/2 py-2.5 px-4 focus:outline-none lg:w-1/4"
-        value={selectedQuestionId || ""}
+        value={selectedQuestionId || ''}
         onChange={handleQuestionChange}
       >
         <option value="">Zvoľte hlasovanie</option>
         {questions.map((question) => (
           <option key={question.$id} value={question.$id}>
-            {question.text.split(" ").slice(0, 2).join(" ")}
+            {question.text.split(' ').slice(0, 2).join(' ')}
           </option>
         ))}
       </select>

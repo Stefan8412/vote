@@ -10,9 +10,40 @@ import Voteweight from './pages/Vote-weight';
 
 import Layout from './components/Layout';
 
-import UserCounter from './pages/Users';
+import Results from './pages/Results';
+import { useState, useEffect } from 'react';
+
+import { account } from './lib/appwrite';
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false); // Admin check
+  const [loading, setLoading] = useState(true); // Loading state
+  console.log('isAdmin', isAdmin);
+
+  useEffect(() => {
+    const checkIfAdmin = async () => {
+      try {
+        const user = await account.get(); // Fetch user data
+        console.log('user', user);
+
+        // Replace this with your actual admin check logic
+        if (user.name === 'admin') {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      } finally {
+        setLoading(false); // Mark loading as complete
+      }
+    };
+
+    checkIfAdmin();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator until the check completes
+  }
+
   return (
     <Router>
       <AuthProvider>
@@ -22,8 +53,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<Home />} />
-              <Route path="/users" element={<UserCounter />} />
               <Route path="/voteweight" element={<Voteweight />} />
+              {isAdmin ? <Route path="/results" element={<Results />} /> : null}
               <Route path="/howto" element={<HowTo />} />
             </Route>
           </Routes>
