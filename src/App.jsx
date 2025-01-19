@@ -25,7 +25,6 @@ function App() {
               <Route path="/users" element={<UserCounter />} />
               <Route path="/voteweight" element={<Voteweight />} />
               <Route path="/howto" element={<HowTo />} />
-              <Route path="/gdpr" element={<GDPR />} />
             </Route>
           </Routes>
         </Layout>
