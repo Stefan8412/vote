@@ -45,22 +45,26 @@ function App() {
   }
 
   return (
-    <Router>
-      <AuthProvider>
-        <Layout>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/voteweight" element={<Voteweight />} />
-              {isAdmin ? <Route path="/results" element={<Results />} /> : null}
-              <Route path="/howto" element={<HowTo />} />
-            </Route>
-          </Routes>
-        </Layout>
-      </AuthProvider>
-    </Router>
+    <>
+      <Router>
+        <AuthProvider>
+          <Layout>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/voteweight" element={<Voteweight />} />
+                {isAdmin ? (
+                  <Route path="/results" element={<Results />} />
+                ) : null}
+                <Route path="/howto" element={<HowTo />} />
+              </Route>
+            </Routes>
+          </Layout>
+        </AuthProvider>
+      </Router>
+    </>
   );
 }
 

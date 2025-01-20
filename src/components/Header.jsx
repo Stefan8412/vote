@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { account } from '../lib/appwrite';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -8,10 +9,36 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('/'); // To track the active menu item
 
+  const [isAdmin, setIsAdmin] = useState(false); // Admin check
+  const [loading, setLoading] = useState(true); // Loading state
+
   /* 
   const logoutClick = () => {
     navigate("/login");
   }; */
+  useEffect(() => {
+    const checkIfAdmin = async () => {
+      try {
+        const user = await account.get(); // Fetch user data
+        console.log('user', user);
+
+        // Replace this with your actual admin check logic
+        if (user.name === 'admin') {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      } finally {
+        setLoading(false); // Mark loading as complete
+      }
+    };
+
+    checkIfAdmin();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator until the check completes
+  }
 
   const handleMenuClick = (path) => {
     setActiveLink(path);
@@ -72,6 +99,16 @@ const Header = () => {
               >
                 Vážené hlasovanie
               </button>
+              {isAdmin && (
+                <button
+                  onClick={() => handleMenuClick('/results')}
+                  className={`hover:text-red-300 ${
+                    activeLink === '/results' ? 'text-red-400 font-bold' : ''
+                  }`}
+                >
+                  Výsledky
+                </button>
+              )}
 
               <button
                 onClick={() => handleMenuClick('/logout')}
