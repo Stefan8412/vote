@@ -8,7 +8,7 @@ import {
 } from '../lib/appwrite';
 import { saveAs } from 'file-saver';
 
-export default function Results() {
+export default function Resultweight() {
   const [questions, setQuestions] = useState([]); // List of all questions
   const [selectedQuestionId, setSelectedQuestionId] = useState(''); // Currently selected question ID
   const [results, setResults] = useState([]); // Raw results for the selected question

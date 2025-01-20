@@ -100,14 +100,37 @@ const Header = () => {
                 Vážené hlasovanie
               </button>
               {isAdmin && (
-                <button
-                  onClick={() => handleMenuClick('/results')}
-                  className={`hover:text-red-300 ${
-                    activeLink === '/results' ? 'text-red-400 font-bold' : ''
-                  }`}
-                >
-                  Výsledky
-                </button>
+                <div className="relative group flex items-center">
+                  <button
+                    className={`hover:text-red-300 ${
+                      activeLink === '/results' ? 'text-red-400 font-bold' : ''
+                    }`}
+                  >
+                    Výsledky
+                  </button>
+                  <div className="absolute left-0 hidden group-hover:block bg-gray-700 text-white rounded shadow-lg mt-2">
+                    <button
+                      onClick={() => handleMenuClick('/resultsimple')}
+                      className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
+                        activeLink === '/resultsimple'
+                          ? 'bg-gray-600 font-bold'
+                          : ''
+                      }`}
+                    >
+                      Jednoduché výsledky
+                    </button>
+                    <button
+                      onClick={() => handleMenuClick('/resultweight')}
+                      className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
+                        activeLink === '/resultweight'
+                          ? 'bg-gray-600 font-bold'
+                          : ''
+                      }`}
+                    >
+                      Podrobné výsledky
+                    </button>
+                  </div>
+                </div>
               )}
 
               <button

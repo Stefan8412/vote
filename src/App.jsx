@@ -7,10 +7,10 @@ import Login from './pages/Login';
 import HowTo from './pages/HowTo';
 import Register from './pages/Register';
 import Voteweight from './pages/Vote-weight';
-
+import Resultweight from './pages/Resultweight';
 import Layout from './components/Layout';
 
-import Results from './pages/Results';
+import Resultsimple from './pages/Resultsimple';
 import { useState, useEffect } from 'react';
 
 import { account } from './lib/appwrite';
@@ -55,9 +55,15 @@ function App() {
               <Route element={<PrivateRoutes />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/voteweight" element={<Voteweight />} />
+
                 {isAdmin ? (
-                  <Route path="/results" element={<Results />} />
+                  <>
+                    <Route path="/resultsimple" element={<Resultsimple />} />
+
+                    <Route path="/resultweight" element={<Resultweight />} />
+                  </>
                 ) : null}
+
                 <Route path="/howto" element={<HowTo />} />
               </Route>
             </Routes>
