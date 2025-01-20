@@ -117,7 +117,7 @@ const Header = () => {
                           : ''
                       }`}
                     >
-                      Jednoduché výsledky
+                      Jednoduché hlasovanie
                     </button>
                     <button
                       onClick={() => handleMenuClick('/resultweight')}
@@ -127,7 +127,7 @@ const Header = () => {
                           : ''
                       }`}
                     >
-                      Podrobné výsledky
+                      Vážené hlasovanie
                     </button>
                   </div>
                 </div>

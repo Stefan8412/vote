@@ -128,14 +128,6 @@ export default function Resultsimple() {
             </p>
           </div>
 
-          {/* Export to CSV button */}
-          <button
-            onClick={exportResultsToCSV}
-            className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
-          >
-            Stiahni výsledky
-          </button>
-
           {/* Display detailed results */}
           <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
           <ul>
@@ -152,6 +144,13 @@ export default function Resultsimple() {
           </ul>
         </div>
       )}
+      {/* Export to CSV button */}
+      <button
+        onClick={exportResultsToCSV}
+        className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
+      >
+        Stiahni výsledky
+      </button>
     </div>
   );
 }

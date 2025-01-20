@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import {
   databases,
   DB_ID,
-  COLLECTION_ID,
-  COLLECTION_ID3,
+  COLLECTION_ID2,
+  COLLECTION_ID1,
   Query,
 } from '../lib/appwrite';
 import { saveAs } from 'file-saver';
@@ -20,7 +20,7 @@ export default function Resultweight() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await databases.listDocuments(DB_ID, COLLECTION_ID);
+        const response = await databases.listDocuments(DB_ID, COLLECTION_ID2);
         setQuestions(response.documents);
         if (response.documents.length > 0) {
           setSelectedQuestionId(response.documents[0].$id); // Default to the first question
@@ -53,7 +53,7 @@ export default function Resultweight() {
     const fetchResults = async () => {
       try {
         setLoading(true);
-        const response = await databases.listDocuments(DB_ID, COLLECTION_ID3, [
+        const response = await databases.listDocuments(DB_ID, COLLECTION_ID1, [
           Query.equal('questionId', selectedQuestionId),
         ]);
         setResults(response.documents);
@@ -128,14 +128,6 @@ export default function Resultweight() {
             </p>
           </div>
 
-          {/* Export to CSV button */}
-          <button
-            onClick={exportResultsToCSV}
-            className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
-          >
-            Stiahni výsledky
-          </button>
-
           {/* Display detailed results */}
           <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
           <ul>
@@ -150,8 +142,17 @@ export default function Resultweight() {
               </li>
             ))}
           </ul>
+
+          {/* Export to CSV button */}
         </div>
       )}
+
+      <button
+        onClick={exportResultsToCSV}
+        className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
+      >
+        Stiahni výsledky
+      </button>
     </div>
   );
 }
