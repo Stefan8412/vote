@@ -124,20 +124,20 @@ export default function Question({ data }) {
       >
         <Vote
           text={data.odpoved_1}
-          percentage={Math.floor((data.hlasy_1 / totalVotes) * 100)}
-          votes={data.hlasy_1}
+          /*    percentage={Math.floor((data.hlasy_1 / totalVotes) * 100)}
+          votes={data.hlasy_1} */
         />
 
         <Vote
           text={data.odpoved_2}
-          percentage={Math.floor((data.hlasy_2 / totalVotes) * 100)}
-          votes={data.hlasy_2}
+          /*   percentage={Math.floor((data.hlasy_2 / totalVotes) * 100)}
+          votes={data.hlasy_2} */
         />
 
         <Vote
           text={data.odpoved_3}
-          percentage={Math.floor((data.hlasy_3 / totalVotes) * 100)}
-          votes={data.hlasy_3}
+          /*  percentage={Math.floor((data.hlasy_3 / totalVotes) * 100)}
+          votes={data.hlasy_3} */
         />
 
         <button
