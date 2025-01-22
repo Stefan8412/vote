@@ -88,7 +88,7 @@ const Home = () => {
         <option value="">Zvoľte hlasovanie</option>
         {questions.map((question) => (
           <option key={question.$id} value={question.$id}>
-            {question.text.split(' ').slice(0, 2).join(' ')}
+            {question.text.split(' ').slice(0, 3).join(' ')}
           </option>
         ))}
       </select>

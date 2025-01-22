@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import Questionweight from "../components/Question-weight";
+import { useState, useEffect } from 'react';
+import Questionweight from '../components/Question-weight';
 
-import { client, databases, DB_ID, COLLECTION_ID2 } from "../lib/appwrite";
+import { client, databases, DB_ID, COLLECTION_ID2 } from '../lib/appwrite';
 
 const Voteweight = () => {
   const [votes, setVotes] = useState({});
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState('');
   const [currentUserId, setCurrentUserId] = useState(null);
   const [items, setItems] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState('');
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
   const [questions, setQuestions] = useState([]);
@@ -19,10 +19,10 @@ const Voteweight = () => {
     const unsubscribe = client.subscribe(
       `databases.${DB_ID}.collections.${COLLECTION_ID2}.documents`,
       (res) => {
-        console.log(res, "res");
+        console.log(res, 'res');
 
         if (
-          res.events.includes("databases.*.collections.*.documents.*.update")
+          res.events.includes('databases.*.collections.*.documents.*.update')
         ) {
           setQuestions((prevQuestions) => {
             return prevQuestions.map((question) => {
@@ -34,7 +34,7 @@ const Voteweight = () => {
             });
           });
 
-          console.log("Updated Question");
+          console.log('Updated Question');
         }
       }
     );
@@ -55,7 +55,7 @@ const Voteweight = () => {
 
   const updateSelectedQuestion = async (questionId) => {
     const selectedQuestion = questions.find((q) => q.$id === questionId);
-    console.log(selectedQuestion, "trafena");
+    console.log(selectedQuestion, 'trafena');
     if (selectedQuestion) {
       await databases.updateDocument(
         DB_ID,
@@ -72,13 +72,13 @@ const Voteweight = () => {
     <main className="container max-w-3xl mx-auto px-4 py-10">
       <select
         className="h-12 border border-gray-300 text-gray-400 text-base rounded-lg block w-1/2 py-2.5 px-4 focus:outline-none lg:w-1/4"
-        value={selectedQuestionId || ""}
+        value={selectedQuestionId || ''}
         onChange={handleQuestionChange}
       >
         <option value="">Zvoľte hlasovanie</option>
         {questions.map((question) => (
           <option key={question.$id} value={question.$id}>
-            {question.text.split(" ").slice(0, 2).join(" ")}
+            {question.text.split(' ').slice(0, 3).join(' ')}
           </option>
         ))}
       </select>

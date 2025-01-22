@@ -29,7 +29,7 @@ export default function Questionweight({ data }) {
     '67188d8b003d5d24fd39': { population: 79305 },
     '67188f6000257f5eb305': { population: 75561 },
     '67188d030013bd15c23f': { population: 58560 },
-    '67188fbd0029df3ef6ac': { population: 15319 },
+    '678fa2e7001960f89766': { population: 15319 },
     '67188ec8002555126f88': { population: 10646 },
     '67188fe40003ca3a30fc': { population: 126400 },
 
