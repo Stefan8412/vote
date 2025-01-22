@@ -247,17 +247,46 @@ export default function Resultweight({ data }) {
             {questions.find((q) => q.$id === selectedQuestionId)?.text || ''}
           </h2>
 
-          {/* Display aggregated vote counts */}
-          <div className="mb-4">
-            <p>
-              <strong>ZA:</strong> {voteCounts['ZA'] || 0}
-            </p>
-            <p>
-              <strong>PROTI:</strong> {voteCounts['PROTI'] || 0}
-            </p>
-            <p>
-              <strong>ZDRŽAL SA:</strong> {voteCounts['ZDRŽAL SA'] || 0}
-            </p>
+          {/* Display aggregated vote counts as rectangles */}
+          <div className="mb-4 flex justify-between items-center">
+            {/* ZA */}
+            <div className="flex flex-col items-center">
+              <div
+                className="h-6 w-20 bg-blue-500"
+                style={{
+                  width: `${(voteCounts['ZA'] || 0) * 10}px`, // Adjust multiplier for scaling
+                }}
+              ></div>
+              <span className="mt-2 text-lg font-bold">
+                ZA: {voteCounts['ZA'] || 0}
+              </span>
+            </div>
+
+            {/* PROTI */}
+            <div className="flex flex-col items-center">
+              <div
+                className="h-6 w-20 bg-red-500"
+                style={{
+                  width: `${(voteCounts['PROTI'] || 0) * 10}px`,
+                }}
+              ></div>
+              <span className="mt-2 text-lg font-bold">
+                PROTI: {voteCounts['PROTI'] || 0}
+              </span>
+            </div>
+
+            {/* ZDRŽAL SA */}
+            <div className="flex flex-col items-center">
+              <div
+                className="h-6 w-20 bg-green-500"
+                style={{
+                  width: `${(voteCounts['ZDRŽAL SA'] || 0) * 10}px`,
+                }}
+              ></div>
+              <span className="mt-2 text-lg font-bold">
+                ZDRŽAL SA: {voteCounts['ZDRŽAL SA'] || 0}
+              </span>
+            </div>
           </div>
           {/*  {voteSuccess !== null &&
             (voteSuccess ? (
@@ -281,7 +310,7 @@ export default function Resultweight({ data }) {
           )}
 
           {/* Display detailed results */}
-          <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
+          {/* <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
           <ul>
             {results.map((result) => (
               <li key={result.$id} className="p-2 border-b">
@@ -293,18 +322,18 @@ export default function Resultweight({ data }) {
                 </p>
               </li>
             ))}
-          </ul>
+          </ul> */}
 
           {/* Export to CSV button */}
         </div>
       )}
 
-      <button
+      {/*  <button
         onClick={exportResultsToCSV}
         className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
       >
         Stiahni výsledky
-      </button>
+      </button> */}
     </div>
   );
 }
