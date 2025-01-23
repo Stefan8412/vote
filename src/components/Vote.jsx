@@ -16,13 +16,15 @@ export default function Vote({ text, percentage, votes }) {
           {text}
           {/* <span>{percentage || 0}%</span> */}
         </p>
+
         <progress
-          className="w-full h-2 mt-4 rounded-lg [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-value]:rounded-lg"
+          className="w-full h-2 rounded-lg appearance-none [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-value]:bg-blue-500 [&::-webkit-progress-value]:rounded-lg [&::-moz-progress-bar]:bg-gray-200"
           value={percentage}
           max="100"
         >
           {percentage}%
         </progress>
+
         {/*  <small className="text-slate-500">{votes} hlasov</small> */}
       </label>
     </div>
