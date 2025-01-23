@@ -81,7 +81,8 @@ export default function Questionweight({ data }) {
       // Query the votes collection to check if the user has voted on this question
       const votes = await databases.listDocuments(DB_ID, COLLECTION_ID1, [
         Query.equal('userEmail', [userEmail]), // Wrap value in an array
-        Query.equal('questionId', [data.$id]), // Wrap value in an array
+        Query.equal('questionId', [data.$id]),
+        Query.limit(35),
       ]);
       console.log('Votes query result:', votes.documents);
 

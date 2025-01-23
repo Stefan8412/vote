@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import Questionweight from '../components/Question-weight';
 
-import { client, databases, DB_ID, COLLECTION_ID2 } from '../lib/appwrite';
+import {
+  client,
+  databases,
+  DB_ID,
+  COLLECTION_ID2,
+  Query,
+} from '../lib/appwrite';
 
 const Voteweight = () => {
   const [votes, setVotes] = useState({});
@@ -43,7 +49,9 @@ const Voteweight = () => {
   }, []);
 
   async function getQuestionsFromDB() {
-    const questions = await databases.listDocuments(DB_ID, COLLECTION_ID2);
+    const questions = await databases.listDocuments(DB_ID, COLLECTION_ID2, [
+      Query.limit(35),
+    ]);
     setQuestions(questions.documents);
   }
   const handleQuestionChange = (e) => {

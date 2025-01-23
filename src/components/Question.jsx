@@ -46,6 +46,7 @@ export default function Question({ data }) {
       const votes = await databases.listDocuments(DB_ID, COLLECTION_ID3, [
         Query.equal('userEmail', [userEmail]), // Wrap value in an array
         Query.equal('questionId', [data.$id]), // Wrap value in an array
+        Query.limit(35),
       ]);
 
       console.log('Votes query result:', votes.documents);
