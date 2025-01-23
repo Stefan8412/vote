@@ -33,8 +33,6 @@ const Voteweight = () => {
               return res.payload;
             });
           });
-
-          console.log('Updated Question');
         }
       }
     );
@@ -55,7 +53,7 @@ const Voteweight = () => {
 
   const updateSelectedQuestion = async (questionId) => {
     const selectedQuestion = questions.find((q) => q.$id === questionId);
-    console.log(selectedQuestion, 'trafena');
+
     if (selectedQuestion) {
       await databases.updateDocument(
         DB_ID,

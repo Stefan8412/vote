@@ -20,8 +20,6 @@ const Home = () => {
     const unsubscribe = client.subscribe(
       `databases.${DB_ID}.collections.${COLLECTION_ID}.documents`,
       (res) => {
-        console.log(res, 'res');
-
         if (
           res.events.includes('databases.*.collections.*.documents.*.update')
         ) {
@@ -34,8 +32,6 @@ const Home = () => {
               return res.payload;
             });
           });
-
-          console.log('Updated Question');
         }
       }
     );
@@ -54,7 +50,7 @@ const Home = () => {
 
   async function getQuestionsFromDB() {
     const questions = await databases.listDocuments(DB_ID, COLLECTION_ID);
-    console.log(questions, 'blabla');
+
     setQuestions(questions.documents);
   }
 
@@ -64,7 +60,7 @@ const Home = () => {
   };
   const updateSelectedQuestion = async (questionId) => {
     const selectedQuestion = questions.find((q) => q.$id === questionId);
-    console.log(selectedQuestion, 'trafena');
+
     if (selectedQuestion) {
       await databases.updateDocument(
         DB_ID,
