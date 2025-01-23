@@ -28,8 +28,6 @@ export const AuthProvider = ({ children }) => {
   const loginUser = async (userInfo) => {
     setLoading(true);
 
-    console.log('userInfo', userInfo);
-
     try {
       await deleteExistingSession();
       let response = await account.createEmailPasswordSession(

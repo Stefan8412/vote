@@ -18,13 +18,11 @@ import { account } from './lib/appwrite';
 function App() {
   const [isAdmin, setIsAdmin] = useState(false); // Admin check
   const [loading, setLoading] = useState(true); // Loading state
-  console.log('isAdmin', isAdmin);
 
   useEffect(() => {
     const checkIfAdmin = async () => {
       try {
         const user = await account.get(); // Fetch user data
-        console.log('user', user);
 
         // Replace this with your actual admin check logic
         if (user.name === 'admin') {

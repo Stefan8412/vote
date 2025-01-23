@@ -87,6 +87,7 @@ export default function Resultweight({ data }) {
         setLoading(true);
         const response = await databases.listDocuments(DB_ID, COLLECTION_ID1, [
           Query.equal('questionId', selectedQuestionId),
+          Query.limit(35),
         ]);
         setResults(response.documents);
 
@@ -140,7 +141,8 @@ export default function Resultweight({ data }) {
           DB_ID,
           COLLECTION_ID1,
           [
-            Query.equal('questionId', [selectedQuestionId]), // Fetch votes only for the specific question ID
+            Query.equal('questionId', [selectedQuestionId]),
+            Query.limit(35), // Fetch votes only for the specific question ID
           ]
         );
         console.log(voteDocuments, 'voteDocuments');
