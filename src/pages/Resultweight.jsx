@@ -29,7 +29,7 @@ export default function Resultweight({ data }) {
     '6788cb8b003017c9b115': { population: 31132 },
     '678a38c800015a6127c0': { population: 79305 },
     '67188f6000257f5eb305': { population: 75561 },
-    '67188d030013bd15c23f': { population: 58560 },
+    '67934bff0006d29eb850': { population: 58560 },
     '67188fbd0029df3ef6ac': { population: 15319 },
     '67188ec8002555126f88': { population: 10646 },
     '6788af1e000840b29a56': { population: 126400 },
@@ -290,7 +290,7 @@ export default function Resultweight({ data }) {
               </span>
             </div>
           </div>
-          {/*  {voteSuccess !== null &&
+          {voteSuccess !== null &&
             (voteSuccess ? (
               <button className="bg-green-500 text-white font-bold py-2 px-4">
                 {'Schválené'}
@@ -299,17 +299,7 @@ export default function Resultweight({ data }) {
               <button className="bg-red-500 text-white font-bold py-2 px-4">
                 {'Neschválené'}
               </button>
-            ))} */}
-
-          {result2 ? (
-            <button className="bg-green-500 text-white font-bold py-2 px-4">
-              {'Schválené'}
-            </button>
-          ) : (
-            <button className="bg-red-500 text-white font-bold py-2 px-4">
-              {'Neschválené'}
-            </button>
-          )}
+            ))}
 
           {/* Display detailed results */}
           {/* <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>

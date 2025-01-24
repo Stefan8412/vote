@@ -47,7 +47,7 @@ export default function Questionweight({ data }) {
   const voterspecial = {
     '670f5b5a000d36d03d2c': { population: 0 },
   };
-  console.log(voteSuccess, 'votesuccess');
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -84,7 +84,6 @@ export default function Questionweight({ data }) {
         Query.equal('questionId', [data.$id]),
         Query.limit(35),
       ]);
-      console.log('Votes query result:', votes.documents);
 
       // Check if the user has voted on this question
       if (votes.documents.length > 0) {
@@ -107,7 +106,6 @@ export default function Questionweight({ data }) {
 
       // Combine both results to determine final voting success
       setVoteSuccess(populationResult && specialUserResult);
-      console.log(votes, 'dfjh'); // Check the updated votes object here
     }
   }, [votes]);
 
@@ -134,7 +132,6 @@ export default function Questionweight({ data }) {
 
         // Set the previously stored votes in state
         setVotes(fetchedVotes);
-        console.log(fetchedVotes, 'Fetched votes');
       } catch (error) {
         console.error('Error fetching user or votes:', error);
       }
@@ -174,7 +171,7 @@ export default function Questionweight({ data }) {
 
     // Calculate total population only from those who voted
     const totalPopulation = calculateTotalPopulationFromVotes(votes);
-    console.log(totalPopulation, votes, 'votes');
+
     for (const voter of Object.keys(voters)) {
       if (votes[voter]) {
         const weight = (voters[voter].population / totalPopulation) * 100;
