@@ -123,8 +123,8 @@ export default function Resultweight({ data }) {
       setResult2(specialUserResult);
 
       // Combine both results to determine final voting success
-      //   setVoteSuccess(populationResult && specialUserResult);
-      setVoteSuccess(specialUserResult);
+      setVoteSuccess(populationResult && specialUserResult);
+
       console.log(votes, 'dfjh'); // Check the updated votes object here
     }
   }, [votes]);
