@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../utils/AuthContext";
+import { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../utils/AuthContext';
 
 const Login = () => {
   const { user, loginUser } = useAuth();
@@ -10,7 +10,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   });
 
@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <div className="container">
       <h2 className="text-3xl text-center font-bold">
-        {"Rada partnerstva PSK-Hlasovanie"}
+        {'Rada partnerstva PSK-Hlasovanie'}
       </h2>
       <div className="login-register-container">
         <form onSubmit={handleSubmit} ref={loginForm}>
@@ -54,12 +54,22 @@ const Login = () => {
           </div>
 
           <div className="form-field-wrapper">
-            <input type="submit" value="Prihláste sa" className="btn" />
+            <input
+              type="submit"
+              value="Prihláste sa"
+              className="btn rounded-lg"
+            />
           </div>
         </form>
 
         <p>
-          Nemáte účet? <Link to="/register">Registrujte sa</Link>
+          Nemáte účet?{' '}
+          <Link
+            to="/register"
+            className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 hover:shadow-md transition-all"
+          >
+            Registrujte sa
+          </Link>
         </p>
       </div>
     </div>
