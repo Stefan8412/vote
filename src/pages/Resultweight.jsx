@@ -24,7 +24,7 @@ export default function Resultweight({ data }) {
   const [userId, setUserId] = useState('');
 
   const voters = {
-    '6718900f0032f210b946': { population: 53203 },
+    '6798a7040026fc9b6073': { population: 53203 },
     '678e0e59002db3a1f71a': { population: 19483 },
     '6788cb8b003017c9b115': { population: 31132 },
     '678a38c800015a6127c0': { population: 79305 },
@@ -33,19 +33,19 @@ export default function Resultweight({ data }) {
     '67188fbd0029df3ef6ac': { population: 15319 },
     '67188ec8002555126f88': { population: 10646 },
     '6788af1e000840b29a56': { population: 126400 },
-    '67188ef700360836d036': { population: 92759 },
+    '679b8e65001a5055d1c7': { population: 92759 },
     '6788d438001e4979a0d8': { population: 61913 },
     '6787a742002d1a4cea1b': { population: 33964 },
-    '6718902e0021c9d89d06': { population: 82025 },
+    '679b6f5f000fc2a1c156': { population: 82025 },
     '678f7d5d000c01bbbfaa': { population: 179 },
     '6787b571001f11c23993': { population: 3743 },
     '6787c10a0022dd543ab1': { population: 13907 },
-    '6718908b001d308d6bd9': { population: 48640 },
+    '67989ef40028708e4539': { population: 48640 },
     '671890da0025ffd3d5f4': { population: 2399 },
   };
 
   const voterspecial = {
-    '678b3f1a00218c054465': { population: 0 },
+    '6798c9af0002ec190148': { population: 0 },
   };
 
   // Fetch all questions on component mount
