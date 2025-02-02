@@ -52,7 +52,9 @@ export default function Resultweight({ data }) {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await databases.listDocuments(DB_ID, COLLECTION_ID2);
+        const response = await databases.listDocuments(DB_ID, COLLECTION_ID2, [
+          Query.limit(35),
+        ]);
         setQuestions(response.documents);
         if (response.documents.length > 0) {
           setSelectedQuestionId(response.documents[0].$id); // Default to the first question
