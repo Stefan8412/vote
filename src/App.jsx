@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
 import { AuthProvider } from './utils/AuthContext';
 import Login from './pages/Login';
+import NotFound from './components/NotFound';
 
 import HowTo from './pages/HowTo';
 import Register from './pages/Register';
@@ -54,13 +55,14 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/voteweight" element={<Voteweight />} />
 
-                {isAdmin ? (
-                  <>
-                    <Route path="/resultsimple" element={<Resultsimple />} />
-
-                    <Route path="/resultweight" element={<Resultweight />} />
-                  </>
-                ) : null}
+                <Route
+                  path="/resultsimple"
+                  element={isAdmin ? <Resultsimple /> : <NotFound />}
+                />
+                <Route
+                  path="/resultweight"
+                  element={isAdmin ? <Resultweight /> : <NotFound />}
+                />
 
                 <Route path="/howto" element={<HowTo />} />
               </Route>

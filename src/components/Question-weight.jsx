@@ -124,7 +124,7 @@ export default function Questionweight({ data }) {
             Query.equal('questionId', [data.$id]), // Fetch votes only for the specific question ID
           ]
         );
-        console.log(voteDocuments, 'voteDocuments');
+
         const fetchedVotes = voteDocuments.documents.reduce((acc, doc) => {
           acc[doc.userId] = doc.vote; // Assuming vote is stored under `vote` key in Appwrite
           return acc;
