@@ -36,6 +36,18 @@ export default function Resultsimple() {
   }, []);
   // Export results to CSV
   const exportResultsToCSV = () => {
+    // Prepare data
+    const worksheetData = [
+      ['Otázka', 'Email', 'Hlasoval'], // Headers
+      ...results.map((result) => [
+        result.question,
+        result.userEmail,
+        result.vote,
+      ]),
+    ];
+
+    // Create a worksheet
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
     // Create a workbook and append the worksheet
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Výsledky');
