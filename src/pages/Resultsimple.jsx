@@ -158,7 +158,7 @@ export default function Resultsimple() {
           </div>
 
           {/* Display detailed results */}
-          {/* <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
+          <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
           <ul>
             {results.map((result) => (
               <li key={result.$id} className="p-2 border-b">
@@ -170,16 +170,16 @@ export default function Resultsimple() {
                 </p>
               </li>
             ))}
-          </ul> */}
+          </ul>
         </div>
       )}
       {/* Export to CSV button */}
-      {/*  <button
+      <button
         onClick={exportResultsToCSV}
         className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
       >
         Stiahni výsledky
-      </button> */}
+      </button>
     </div>
   );
 }
