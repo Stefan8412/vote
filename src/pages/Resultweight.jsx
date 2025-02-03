@@ -292,7 +292,7 @@ export default function Resultweight({ data }) {
               </span>
             </div>
           </div>
-          {voteSuccess !== null &&
+          {/* {voteSuccess !== null &&
             (voteSuccess ? (
               <button className="bg-green-500 text-white font-bold py-2 px-4">
                 {'Schválené'}
@@ -301,7 +301,7 @@ export default function Resultweight({ data }) {
               <button className="bg-red-500 text-white font-bold py-2 px-4">
                 {'Neschválené'}
               </button>
-            ))}
+            ))} */}
 
           {/* Display detailed results */}
           {/* <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
