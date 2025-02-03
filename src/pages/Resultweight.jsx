@@ -28,9 +28,9 @@ export default function Resultweight({ data }) {
     '678e0e59002db3a1f71a': { population: 19483 },
     '6788cb8b003017c9b115': { population: 31132 },
     '678a38c800015a6127c0': { population: 79305 },
-    '67188f6000257f5eb305': { population: 75561 },
+    '679f91dd001d4b64938b': { population: 75561 },
     '67934bff0006d29eb850': { population: 58560 },
-    '67188fbd0029df3ef6ac': { population: 15319 },
+    '678fa2e7001960f89766': { population: 15319 },
     '67188ec8002555126f88': { population: 10646 },
     '6788af1e000840b29a56': { population: 126400 },
     '679b8e65001a5055d1c7': { population: 92759 },
@@ -41,7 +41,7 @@ export default function Resultweight({ data }) {
     '6787b571001f11c23993': { population: 3743 },
     '6787c10a0022dd543ab1': { population: 13907 },
     '67989ef40028708e4539': { population: 48640 },
-    '671890da0025ffd3d5f4': { population: 2399 },
+    '6797dfc800351c2d901d': { population: 2399 },
   };
 
   const voterspecial = {
