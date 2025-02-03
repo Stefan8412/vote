@@ -8,6 +8,7 @@ import {
   account,
 } from '../lib/appwrite';
 import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
 
 export default function Resultweight({ data }) {
   const [questions, setQuestions] = useState([]); // List of all questions
@@ -69,15 +70,32 @@ export default function Resultweight({ data }) {
   }, []);
   // Export results to CSV
   const exportResultsToCSV = () => {
-    const csvHeader = 'Otázka,Email,Hlasoval\n';
-    const csvBody = results
-      .map((result) => `${result.question},${result.userEmail},${result.vote}`)
-      .join('\n');
+    // Prepare data
+    const worksheetData = [
+      ['Otázka', 'Email', 'Hlasoval'], // Headers
+      ...results.map((result) => [
+        result.question,
+        result.userEmail,
+        result.vote,
+      ]),
+    ];
 
-    const csvContent = csvHeader + csvBody;
+    // Create a worksheet
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, 'results.csv');
+    // Create a workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Výsledky');
+
+    // Generate and save the XLSX file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const blob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(blob, 'results.xlsx');
   };
 
   // Fetch results and calculate vote counts for the selected question

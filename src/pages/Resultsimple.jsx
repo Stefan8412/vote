@@ -7,6 +7,7 @@ import {
   Query,
 } from '../lib/appwrite';
 import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
 
 export default function Resultsimple() {
   const [questions, setQuestions] = useState([]); // List of all questions
@@ -35,15 +36,19 @@ export default function Resultsimple() {
   }, []);
   // Export results to CSV
   const exportResultsToCSV = () => {
-    const csvHeader = 'Otázka,Email,Hlasoval\n';
-    const csvBody = results
-      .map((result) => `${result.question},${result.userEmail},${result.vote}`)
-      .join('\n');
+    // Create a workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Výsledky');
 
-    const csvContent = csvHeader + csvBody;
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, 'results.csv');
+    // Generate and save the XLSX file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const blob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    saveAs(blob, 'results.xlsx');
   };
 
   // Fetch results and calculate vote counts for the selected question
