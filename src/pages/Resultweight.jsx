@@ -36,7 +36,7 @@ export default function Resultweight({ data }) {
     '679b8e65001a5055d1c7': { population: 92759 },
     '6788d438001e4979a0d8': { population: 61913 },
     '6787a742002d1a4cea1b': { population: 33964 },
-    '679b6f5f000fc2a1c156': { population: 82025 },
+    '67a07b460022752e5eec': { population: 82025 },
     '678f7d5d000c01bbbfaa': { population: 179 },
     '6787b571001f11c23993': { population: 3743 },
     '6787c10a0022dd543ab1': { population: 13907 },
@@ -176,7 +176,7 @@ export default function Resultweight({ data }) {
   const isVotingSuccessfulspec = (votes) => {
     let specialUserVotedYes = false;
     for (const voterspec of Object.keys(voterspecial)) {
-      if (voterspec === '678b3f1a00218c054465') {
+      if (voterspec === '6798c9af0002ec190148') {
         if (votes[voterspec] === 'ZA') {
           specialUserVotedYes = true;
         }
@@ -292,7 +292,7 @@ export default function Resultweight({ data }) {
               </span>
             </div>
           </div>
-          {/* {voteSuccess !== null &&
+          {voteSuccess !== null &&
             (voteSuccess ? (
               <button className="bg-green-500 text-white font-bold py-2 px-4">
                 {'Schválené'}
@@ -301,10 +301,10 @@ export default function Resultweight({ data }) {
               <button className="bg-red-500 text-white font-bold py-2 px-4">
                 {'Neschválené'}
               </button>
-            ))} */}
+            ))}
 
           {/* Display detailed results */}
-          {/* <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
+          <h3 className="text-lg font-medium mb-2">Detailné výsledky:</h3>
           <ul>
             {results.map((result) => (
               <li key={result.$id} className="p-2 border-b">
@@ -316,18 +316,18 @@ export default function Resultweight({ data }) {
                 </p>
               </li>
             ))}
-          </ul> */}
+          </ul>
 
           {/* Export to CSV button */}
         </div>
       )}
 
-      {/*  <button
+      <button
         onClick={exportResultsToCSV}
         className="px-4 py-2 bg-blue-500 text-white rounded mb-4 hover:bg-blue-600"
       >
         Stiahni výsledky
-      </button> */}
+      </button>
     </div>
   );
 }
