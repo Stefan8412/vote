@@ -35,9 +35,9 @@ export default function Resultsimple() {
   }, []);
   // Export results to CSV
   const exportResultsToCSV = () => {
-    const csvHeader = 'User Email,Vote\n';
+    const csvHeader = 'Otázka,Email,Hlasoval\n';
     const csvBody = results
-      .map((result) => `${result.userEmail},${result.vote}`)
+      .map((result) => `${result.question},${result.userEmail},${result.vote}`)
       .join('\n');
 
     const csvContent = csvHeader + csvBody;
