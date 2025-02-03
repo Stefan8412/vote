@@ -28,7 +28,7 @@ export default function Resultsimple() {
         }
       } catch (err) {
         console.error('Error fetching questions:', err);
-        setError('Failed to load questions.');
+        setError('Failed to load.');
       }
     };
 
