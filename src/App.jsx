@@ -55,14 +55,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/voteweight" element={<Voteweight />} />
 
-                <Route
-                  path="/resultsimple"
-                  element={isAdmin ? <Resultsimple /> : <NotFound />}
-                />
-                <Route
-                  path="/resultweight"
-                  element={isAdmin ? <Resultweight /> : <NotFound />}
-                />
+                <Route path="/resultsimple" element={<Resultsimple />} />
+                <Route path="/resultweight" element={<Resultweight />} />
 
                 <Route path="/howto" element={<HowTo />} />
               </Route>
