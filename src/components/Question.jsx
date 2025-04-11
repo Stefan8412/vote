@@ -49,8 +49,6 @@ export default function Question({ data }) {
         Query.limit(35),
       ]);
 
-      console.log('Votes query result:', votes.documents);
-
       // Check if the user has voted on this question
       if (votes.documents.length > 0) {
         setHasVoted(true); // The user has already voted

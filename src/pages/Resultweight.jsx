@@ -25,7 +25,7 @@ export default function Resultweight({ data }) {
   const [userId, setUserId] = useState('');
 
   const voters = {
-    '6798a7040026fc9b6073': { population: 53203 },
+    '67d81ff2002a98aea82e': { population: 53203 },
     '678e0e59002db3a1f71a': { population: 19483 },
     '6788cb8b003017c9b115': { population: 31132 },
     '678a38c800015a6127c0': { population: 79305 },
@@ -145,7 +145,7 @@ export default function Resultweight({ data }) {
       // Combine both results to determine final voting success
       setVoteSuccess(populationResult && specialUserResult);
 
-      console.log(votes, 'dfjh'); // Check the updated votes object here
+      // Check the updated votes object here
     }
   }, [votes]);
 

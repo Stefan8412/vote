@@ -23,29 +23,28 @@ export default function Questionweight({ data }) {
   const [hasVoted, setHasVoted] = useState(false);
 
   const voters = {
-    '6718900f0032f210b946': { population: 53203 },
-    '67188ea6003ca9089150': { population: 19483 },
-    '67188f9e001171d1a606': { population: 31132 },
-    '67188d8b003d5d24fd39': { population: 79305 },
-    '67188f6000257f5eb305': { population: 75561 },
-    '67188d030013bd15c23f': { population: 58560 },
+    '67d81ff2002a98aea82e': { population: 53203 },
+    '678e0e59002db3a1f71a': { population: 19483 },
+    '6788cb8b003017c9b115': { population: 31132 },
+    '678a38c800015a6127c0': { population: 79305 },
+    '679f91dd001d4b64938b': { population: 75561 },
+    '67934bff0006d29eb850': { population: 58560 },
     '678fa2e7001960f89766': { population: 15319 },
     '67188ec8002555126f88': { population: 10646 },
-    '67188fe40003ca3a30fc': { population: 126400 },
-
-    '67188ef700360836d036': { population: 92759 },
-    '67188f3d001891970145': { population: 61913 },
-    '67188e750008f8a00cd4': { population: 33964 },
-    '6718902e0021c9d89d06': { population: 82025 },
-    '671890c1000ed6276d6d': { population: 179 },
-    '6718904e003cd2f1dec4': { population: 3743 },
-    '6718906e003816179729': { population: 13907 },
-    '6718908b001d308d6bd9': { population: 48640 },
-    '671890da0025ffd3d5f4': { population: 2399 },
+    '6788af1e000840b29a56': { population: 126400 },
+    '679b8e65001a5055d1c7': { population: 92759 },
+    '6788d438001e4979a0d8': { population: 61913 },
+    '6787a742002d1a4cea1b': { population: 33964 },
+    '67a07b460022752e5eec': { population: 82025 },
+    '678f7d5d000c01bbbfaa': { population: 179 },
+    '6787b571001f11c23993': { population: 3743 },
+    '6787c10a0022dd543ab1': { population: 13907 },
+    '67989ef40028708e4539': { population: 48640 },
+    '6797dfc800351c2d901d': { population: 2399 },
   };
 
   const voterspecial = {
-    '670f5b5a000d36d03d2c': { population: 0 },
+    '6798c9af0002ec190148': { population: 0 },
   };
 
   useEffect(() => {
@@ -195,14 +194,6 @@ export default function Questionweight({ data }) {
 
     return result;
   };
-
-  /*  const getVoteData = (vote) => {
-    const totalVotes = Object.values(votes).filter((v) => v === vote).length;
-    const percentage = totalVotes
-      ? (totalVotes / Object.values(votes).length) * 100
-      : 0;
-    return { percentage, totalVotes };
-  }; */
 
   function handleSubmit(e) {
     e.preventDefault();
