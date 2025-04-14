@@ -100,39 +100,38 @@ const Header = () => {
                 Vážené hlasovanie
               </button>
 
-              {isAdmin && (
-                <div className="relative group flex items-center">
+              <div className="relative group flex items-center">
+                <button
+                  className={`hover:text-red-300 ${
+                    activeLink === '/results' ? 'text-red-400 font-bold' : ''
+                  }`}
+                >
+                  Výsledky
+                </button>
+                <div className="absolute left-0 hidden group-hover:block bg-gray-700 text-white rounded shadow-lg mt-2">
                   <button
-                    className={`hover:text-red-300 ${
-                      activeLink === '/results' ? 'text-red-400 font-bold' : ''
+                    onClick={() => handleMenuClick('/resultsimple')}
+                    className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
+                      activeLink === '/resultsimple'
+                        ? 'bg-gray-600 font-bold'
+                        : ''
                     }`}
                   >
-                    Výsledky
+                    Jednoduché hlasovanie
                   </button>
-                  <div className="absolute left-0 hidden group-hover:block bg-gray-700 text-white rounded shadow-lg mt-2">
-                    <button
-                      onClick={() => handleMenuClick('/resultsimple')}
-                      className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
-                        activeLink === '/resultsimple'
-                          ? 'bg-gray-600 font-bold'
-                          : ''
-                      }`}
-                    >
-                      Jednoduché hlasovanie
-                    </button>
-                    <button
-                      onClick={() => handleMenuClick('/resultweight')}
-                      className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
-                        activeLink === '/resultweight'
-                          ? 'bg-gray-600 font-bold'
-                          : ''
-                      }`}
-                    >
-                      Vážené hlasovanie
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleMenuClick('/resultweight')}
+                    className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
+                      activeLink === '/resultweight'
+                        ? 'bg-gray-600 font-bold'
+                        : ''
+                    }`}
+                  >
+                    Vážené hlasovanie
+                  </button>
                 </div>
-              )}
+              </div>
+
               <button
                 onClick={() => handleMenuClick('/logout')}
                 className="ml-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
