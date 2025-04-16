@@ -108,7 +108,7 @@ const Header = () => {
                 >
                   Výsledky
                 </button>
-                <div className="absolute left-0 hidden group-hover:block bg-gray-700 text-white rounded shadow-lg mt-2">
+                <div className="absolute left-0 top-full hidden group-hover:block bg-gray-700 text-white rounded shadow-lg z-10">
                   <button
                     onClick={() => handleMenuClick('/resultsimple')}
                     className={`block px-4 py-2 text-sm hover:bg-gray-600 ${
