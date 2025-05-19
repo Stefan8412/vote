@@ -41,7 +41,7 @@ export default function Resultweight({ data }) {
     '678f7d5d000c01bbbfaa': { population: 179 },
     '6787b571001f11c23993': { population: 3743 },
     '6787c10a0022dd543ab1': { population: 13907 },
-    '67fcb4db000b86350a54': { population: 48640 },
+    '68244634002631c40496': { population: 48640 },
     '6797dfc800351c2d901d': { population: 2399 },
   };
 
