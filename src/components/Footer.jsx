@@ -1,19 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const date = new Date();
   const year = date.getFullYear();
   return (
-    <footer className="bg-gray-800 text-gray-400 py-6">
+    <footer className="bg-indigo-900 text-gray-400 py-6">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Logo and Description */}
         <div className="flex items-center space-x-4">
           <p className="text-sm">
-            &copy; Copyright {year} - Made with{" "}
+            &copy; Copyright {year} - Made with{' '}
             <span aria-label="love" role="img">
               💖
-            </span>{" "}
-            in Presov by PSK. All right reserved.{" "}
+            </span>{' '}
+            in Presov by PSK. All right reserved.{' '}
           </p>
         </div>
 

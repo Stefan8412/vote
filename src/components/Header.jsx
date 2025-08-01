@@ -52,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-800 text-white shadow-md">
+    <header className="bg-indigo-900 text-white shadow-md">
       <div className="container mx-auto flex items-center justify-between p-4">
         {' '}
         <div>
@@ -180,7 +180,7 @@ const Header = () => {
 
       {/* Mobile Dropdown */}
       {isOpen && user && (
-        <div className="md:hidden bg-gray-800">
+        <div className="md:hidden bg-indigo-900">
           <nav className="space-y-2 p-4">
             <button
               onClick={() => handleMenuClick('/howto')}
