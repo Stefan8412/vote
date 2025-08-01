@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   };
   const sendPasswordRecovery = async (email) => {
     try {
-      await account.createRecovery(email, 'http://localhost:5173/recovery');
+      await account.createRecovery(email, 'https://hlasovanie.psk.sk/recovery');
       toast({
         title: 'Email odoslaný',
         description:
