@@ -55,13 +55,13 @@ const Header = () => {
     <header className="bg-indigo-900 text-white shadow-md">
       <div className="container mx-auto flex items-center justify-between p-4">
         {' '}
-        <div>
-          <Link id="header-logo" to="/">
+        <div className="flex-shrink-0">
+          <Link to="/">
             <img
-              src="/erbfarebny.png
+              src="/erbpsk.png
             "
               alt="logoPSK"
-              className="logo"
+              className="h-10 w-auto object-contain block"
             />
           </Link>
         </div>
@@ -179,6 +179,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Dropdown */}
+
       {isOpen && user && (
         <div className="md:hidden bg-indigo-900">
           <nav className="space-y-2 p-4">
