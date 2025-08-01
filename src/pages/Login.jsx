@@ -25,52 +25,67 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-3xl text-center font-bold">
-        {'Rada partnerstva PSK-Hlasovanie'}
-      </h2>
-      <div className="login-register-container">
-        <form onSubmit={handleSubmit} ref={loginForm}>
-          <div className="form-field-wrapper">
-            <label>Email:</label>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-center text-gray-800">
+          Rada partnerstva-prihlásenie
+        </h2>
+
+        <form onSubmit={handleSubmit} ref={loginForm} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
             <input
-              className="inputlogin"
               required
               type="email"
               name="email"
-              placeholder="vložte email ..."
+              placeholder="Vložte email ..."
+              className="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
-          <div className="form-field-wrapper">
-            <label>Heslo:</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Heslo
+            </label>
             <input
-              className="inputlogin"
               type="password"
               name="password"
-              placeholder="napíšte heslo..."
-              autoComplete="password"
+              placeholder="Napíšte heslo..."
+              autoComplete="current-password"
+              className="w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
-          <div className="form-field-wrapper">
+          <div>
             <input
               type="submit"
               value="Prihláste sa"
-              className="btn rounded-lg"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-semibold"
             />
           </div>
         </form>
 
-        <p>
-          Nemáte účet?{' '}
-          <Link
-            to="/register"
-            className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 hover:shadow-md transition-all"
-          >
-            Registrujte sa
-          </Link>
-        </p>
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Nemáte účet?{' '}
+            <Link
+              to="/register"
+              className="text-red-500 hover:text-red-600 font-medium hover:underline"
+            >
+              Registrujte sa
+            </Link>
+          </p>
+          <p className="text-sm mt-2">
+            <a
+              href="/forgot-password"
+              className="text-blue-500 hover:underline"
+            >
+              Zabudli ste heslo?
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

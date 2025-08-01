@@ -4,7 +4,8 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import { AuthProvider } from './utils/AuthContext';
 import Login from './pages/Login';
 import NotFound from './components/NotFound';
-
+import ResetPassword from './pages/ResetPassword';
+import ForgotPassword from './pages/ForgotPassword';
 import HowTo from './pages/HowTo';
 import Register from './pages/Register';
 import Voteweight from './pages/Vote-weight';
@@ -51,6 +52,8 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/recovery" element={<ResetPassword />} />
               <Route element={<PrivateRoutes />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/voteweight" element={<Voteweight />} />

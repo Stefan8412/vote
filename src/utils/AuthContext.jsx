@@ -83,12 +83,46 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   };
+  const sendPasswordRecovery = async (email) => {
+    try {
+      await account.createRecovery(email, 'http://localhost:5173/recovery');
+      toast({
+        title: 'Email odoslaný',
+        description:
+          'Skontrolujte vašu emailovú schránku pre odkaz na obnovenie hesla.',
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Chyba',
+        description: 'Nepodarilo sa odoslať email na obnovenie hesla.',
+      });
+    }
+  };
+  const confirmPasswordRecovery = async (userId, secret, newPassword) => {
+    try {
+      await account.updateRecovery(userId, secret, newPassword, newPassword);
+      toast({
+        title: 'Heslo obnovené',
+        description: 'Môžete sa teraz prihlásiť s novým heslom.',
+      });
+      navigate('/login');
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Chyba',
+        description: 'Nepodarilo sa obnoviť heslo.',
+      });
+    }
+  };
 
   const contextData = {
     user,
     loginUser,
     logoutUser,
     registerUser,
+    sendPasswordRecovery,
+    confirmPasswordRecovery,
   };
 
   return (
